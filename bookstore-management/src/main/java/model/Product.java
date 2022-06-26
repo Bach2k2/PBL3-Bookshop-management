@@ -3,43 +3,42 @@ package model;
 import java.sql.Date;
 
 public class Product {
-    private String idProduct;
+    private int idProduct;
     private int quantity;
     private double price;
-    private int averageRating;
-    private int inventory;
-    private String idAuthor;
-    private String genreName;
-    private String bookTitle;
-    private String publisher;
-    private String bookDescription;
-    private Date publishDate;
-    private String itemName;
-    private String itemBrand;
+    private double averageRating;//4
+  //  private int inventory;
+    private String bookTitle;//6
+    private String publisher;//7
+    private String productDescription;//5
+    private Date publishDate;//8
+//    private String itemName;
+//    private String itemBrand;
+
+    private int idAuthor;
+    private int idCategory;
 
     public Product() {
     }
 
-    public Product(String idProduct, int quantity, double price, int averageRating, int inventory, String idAuthor, String genreName, String bookTitle, String publisher, String bookDescription, String itemName, String itemBrand) {
+    public Product(int idProduct, int quantity, double price, double averageRating, String bookTitle, String publisher, String productDescription, Date publishDate, int idAuthor, int categoryId) {
         this.idProduct = idProduct;
         this.quantity = quantity;
         this.price = price;
         this.averageRating = averageRating;
-        this.inventory = inventory;
-        this.idAuthor = idAuthor;
-        this.genreName = genreName;
         this.bookTitle = bookTitle;
         this.publisher = publisher;
-        this.bookDescription = bookDescription;
-        this.itemName = itemName;
-        this.itemBrand = itemBrand;
+        this.productDescription = productDescription;
+        this.publishDate = publishDate;
+        this.idAuthor = idAuthor;
+        this.idCategory = categoryId;
     }
 
-    public String getIdProduct() {
+    public int getIdProduct() {
         return idProduct;
     }
 
-    public void setIdProduct(String idProduct) {
+    public void setIdProduct(int idProduct) {
         this.idProduct = idProduct;
     }
 
@@ -59,36 +58,12 @@ public class Product {
         this.price = price;
     }
 
-    public int getAverageRating() {
+    public double getAverageRating() {
         return averageRating;
     }
 
-    public void setAverageRating(int averageRating) {
+    public void setAverageRating(double averageRating) {
         this.averageRating = averageRating;
-    }
-
-    public int getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(int inventory) {
-        this.inventory = inventory;
-    }
-
-    public String getIdAuthor() {
-        return idAuthor;
-    }
-
-    public void setIdAuthor(String idAuthor) {
-        this.idAuthor = idAuthor;
-    }
-
-    public String getGenreName() {
-        return genreName;
-    }
-
-    public void setGenreName(String genreName) {
-        this.genreName = genreName;
     }
 
     public String getBookTitle() {
@@ -107,27 +82,35 @@ public class Product {
         this.publisher = publisher;
     }
 
-    public String getBookDescription() {
-        return bookDescription;
+    public String getProductDescription() {
+        return productDescription;
     }
 
-    public void setBookDescription(String bookDescription) {
-        this.bookDescription = bookDescription;
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
     }
 
-    public String getItemName() {
-        return itemName;
+    public Date getPublishDate() {
+        return publishDate;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setPublishDate(Date publishDate) {
+        this.publishDate = publishDate;
     }
 
-    public String getItemBrand() {
-        return itemBrand;
+    public int getIdAuthor() {
+        return idAuthor;
     }
 
-    public void setItemBrand(String itemBrand) {
-        this.itemBrand = itemBrand;
+    public void setIdAuthor(int idAuthor) {
+        this.idAuthor = idAuthor;
+    }
+
+    public int getIdCategory() {
+        return idCategory;
+    }
+
+    public void setIdCategory(int idCategory) {
+        this.idCategory = idCategory;
     }
 }

@@ -1,7 +1,7 @@
 package model;
 
 public class Admin {
-    private String idAdmin;
+    private int idAdmin;
     private String username;
     private String adminName;
     private String email;
@@ -10,18 +10,19 @@ public class Admin {
     public Admin() {
     }
 
-    public Admin(String idAdmin, String adminName, String email, String phone) {
+    public Admin(int idAdmin, String adminName, String email, String phone) {
         this.idAdmin = idAdmin;
         this.adminName = adminName;
         this.email = email;
         this.phone = phone;
     }
 
-    public String getIdAdmin() {
+
+    public int getIdAdmin() {
         return idAdmin;
     }
 
-    public void setIdAdmin(String idAdmin) {
+    public void setIdAdmin(int idAdmin) {
         this.idAdmin = idAdmin;
     }
 

@@ -2,11 +2,11 @@ package service.impl;
 
 
 import model.Account;
-import repository.IAccountDAO;
-import repository.impl.AccountDAO;
+import model.Role;
+import dao.impl.AccountDAO;
+import dao.impl.RoleDAO;
 import service.IAccountService;
 
-import javax.inject.Inject;
 import java.util.List;
 
 public class AccountService implements IAccountService {
@@ -53,5 +53,14 @@ public class AccountService implements IAccountService {
     @Override
     public Account findByUsernameAndPasswordAndStatus(String username, String password,Boolean status) {
         return accountRepository.findByUsernameAndPasswordAndStatus(username,password,status);
+    }
+
+    @Override
+    public void setRole(Account account,int idRole) {
+        RoleDAO roleDAO=new RoleDAO();
+        for(Role role: roleDAO.findAllRole())
+        {
+            if(role.getIdRole()==idRole) account.setRole(role);
+        }
     }
 }

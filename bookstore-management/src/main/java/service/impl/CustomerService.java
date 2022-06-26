@@ -1,8 +1,7 @@
 package service.impl;
 
-import model.Account;
 import model.Customer;
-import repository.impl.CustomerDAO;
+import dao.impl.CustomerDAO;
 import service.ICustomerService;
 
 import java.util.List;

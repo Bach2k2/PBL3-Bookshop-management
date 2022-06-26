@@ -1,6 +1,7 @@
 package service;
 
 import model.Account;
+import model.Role;
 
 import java.util.List;
 
@@ -10,4 +11,5 @@ public interface IAccountService {
     boolean deleteById(int id);
     void save(Account account);
     Account findByUsernameAndPasswordAndStatus(String username, String password,Boolean status);
+    void setRole(Account account,int idRole);
 }

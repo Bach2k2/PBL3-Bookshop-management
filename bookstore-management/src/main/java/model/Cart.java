@@ -1,40 +1,40 @@
 package model;
 
 public class Cart {
-    private String idCart;
-    private String idCustomer;
-    private String idProduct;
+    private int idCart;
+    private int idCustomer;
+    private int idProduct;
 
     public Cart() {
     }
 
-    public Cart(String idCart, String idCustomer, String idProduct) {
+    public Cart(int idCart, int idCustomer, int idProduct) {
         this.idCart = idCart;
         this.idCustomer = idCustomer;
         this.idProduct = idProduct;
     }
 
-    public String getIdCart() {
+    public int getIdCart() {
         return idCart;
     }
 
-    public void setIdCart(String idCart) {
+    public void setIdCart(int idCart) {
         this.idCart = idCart;
     }
 
-    public String getIdCustomer() {
+    public int getIdCustomer() {
         return idCustomer;
     }
 
-    public void setIdCustomer(String idCustomer) {
+    public void setIdCustomer(int idCustomer) {
         this.idCustomer = idCustomer;
     }
 
-    public String getIdProduct() {
+    public int getIdProduct() {
         return idProduct;
     }
 
-    public void setIdProduct(String idProduct) {
+    public void setIdProduct(int idProduct) {
         this.idProduct = idProduct;
     }
 }

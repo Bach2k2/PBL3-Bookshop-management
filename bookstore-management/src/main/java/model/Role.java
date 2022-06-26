@@ -2,10 +2,25 @@ package model;
 
 public class Role {
 
+    private int idRole;
     private String code;
     private String name;
 
     public Role() {
+    }
+
+    public Role(int idRole, String code, String name) {
+        this.idRole = idRole;
+        this.code = code;
+        this.name = name;
+    }
+
+    public int getIdRole() {
+        return idRole;
+    }
+
+    public void setIdRole(int idRole) {
+        this.idRole = idRole;
     }
 
     public String getCode() {

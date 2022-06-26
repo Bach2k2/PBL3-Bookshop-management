@@ -1,24 +1,24 @@
 package model;
 
 public class Category {
-    private String idCategory;
+    private int idCategory;
     private String categoryName;
     private String description;
 
     public Category() {
     }
 
-    public Category(String idCategory, String categoryName, String description) {
+    public Category(int idCategory, String categoryName, String description) {
         this.idCategory = idCategory;
         this.categoryName = categoryName;
         this.description = description;
     }
 
-    public String getIdCategory() {
+    public int getIdCategory() {
         return idCategory;
     }
 
-    public void setIdCategory(String idCategory) {
+    public void setIdCategory(int idCategory) {
         this.idCategory = idCategory;
     }
 
