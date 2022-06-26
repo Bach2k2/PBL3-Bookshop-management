@@ -4,7 +4,7 @@
 //** 1) Adds ability to scroll to an absolute position (from top of page) or specific element on the page instead.
 //** 2) Fixes scroll animation not working in Opera. 
 $(document).ready(function() {
-var templatepath = $("#templatedirectory").html();
+var templatepath = $("#templatedirectory").html();S
 templatepath = '';
 var scrolltotop={
 	//startline: Integer. Number of pixels from top of doc scrollbar is scrolled before showing control

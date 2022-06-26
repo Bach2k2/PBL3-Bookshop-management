@@ -64,7 +64,7 @@ public class HomeController extends HttpServlet {
                 SessionUtil.getInstance().removeValue(request, "ACCOUNT");
                 response.sendRedirect(request.getContextPath() + "/home");
                 break;
-            case "book":
+            case "product":
                 response.sendRedirect("views/product/product-list.jsp");
                 break;
             case "header":

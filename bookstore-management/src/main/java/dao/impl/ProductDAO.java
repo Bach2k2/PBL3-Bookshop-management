@@ -9,26 +9,26 @@ import java.util.List;
 
 public class ProductDAO {
     private static String INSERT_PRODUCT_SQL = "Insert INTO product " +
-            "(quantity, price, average_rating, description, book_title, Publisher, publish_date, id_author, id_category) VALUES "
+            "(quantity, price, average_rating, description, book_title, publisher, publish_date, id_author, id_category) VALUES "
             + " (?,?,?,?,?,?,?,?,?);";
     private static String SELECT_ALL_PRODUCT = "SELECT * FROM product";
-    private static String SELECT_PRODUCT_BY_ID = "SELECT * FROM product WHERE ID_Product = ?";
+    private static String SELECT_PRODUCT_BY_ID = "SELECT * FROM product WHERE id_product = ?";
     private static String SELECT_PRODUCT_BY_Category = "SELECT * FROM product WHERE id_category = ?";
-    private static String DELETE_PRODUCT_SQL = "delete from product where ID_Product = ? ;";
+    private static String DELETE_PRODUCT_SQL = "delete from product where id_product = ? ;";
     private static String UPDATE_PRODUCT_SQL = "update product set "
             + "quantity = ?, "
             + "price = ?, "
-            + "avarage_rating = ?, "
-            + "Product_description = ?, "
-            + "Book_title = ?, "
+            + "average_rating = ?, "
+            + "description = ?, "
+            + "book_title = ?, "
             + "publisher = ?, "
             + "publish_date = ?, "
-            + "ID_Author = ?, "
-            + "ID_Category = ? "
+            + "id_author = ?, "
+            + "id_category = ? "
             + "where ID_Product = ?;";
 
     private static String SELECT_CATEGORY_BY_ID = "SELECT * FROM category WHERE id_category = ?";
-    private static String SELECT_AUTHOR_BY_ID = "SELECT * FROM author WHERE idAuthor = ?";
+    private static String SELECT_AUTHOR_BY_ID = "SELECT * FROM author WHERE id_author = ?";
     //private static String SELECT_CATEGORYNAME_BY_ID = "SELECT categoryname FROM Category WHERE ID_Category = ?";
     private static String SELECT_ALL_CATEGORY = "SELECT * FROM category";
     private static String SELECT_ALL_AUTHOR = "SELECT * FROM author";
@@ -37,9 +37,9 @@ public class ProductDAO {
             + "(authorname,dateofbirth,description) "
             + "(?,?,?);";
 
-    private static String SELECT_RATING_BY_ID_PRODUCT = "SELECT * FROM rating WHERE id_roduct = ? ";
+    private static String SELECT_RATING_BY_ID_PRODUCT = "SELECT * FROM rating WHERE id_product = ? ";
     private static String INSERT_RATING_SQL = "Insert INTO rating "
-            + "(ID_Customer,ID_Product,rating_star,review_text) "
+            + "(id_customer,id_Product,rating_star,review_text) "
             + "(?,?,?,?);";
     //private static String SELECT_//
 
@@ -55,8 +55,7 @@ public class ProductDAO {
     public void insertProduct(Product product) throws SQLException {
         System.out.println(INSERT_PRODUCT_SQL);
         // try-with-resource statement will auto close the connection.
-        try (
-                PreparedStatement preparedStatement = this.connection.prepareStatement(INSERT_PRODUCT_SQL)) {
+        try (PreparedStatement preparedStatement = this.connection.prepareStatement(INSERT_PRODUCT_SQL)) {
             preparedStatement.setInt(1, product.getQuantity());
             preparedStatement.setDouble(2, product.getPrice());
             preparedStatement.setDouble(3, product.getAverageRating());
@@ -74,7 +73,7 @@ public class ProductDAO {
         }
     }
 
-    public Product selectProduct(int idProduct) {
+    public Product selectProductByID(int idProduct) {
         Product product = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRODUCT_BY_ID);){
             preparedStatement.setInt(1, idProduct);
@@ -87,7 +86,7 @@ public class ProductDAO {
                 int quantity = rs.getInt("quantity");
                 double price = rs.getDouble("price");
                 double averageRating = rs.getDouble("average_rating");
-                String productDescription = rs.getString("product_description");
+                String productDescription = rs.getString("description");
                 String bookTitle = rs.getString("book_title");
                 String publisher = rs.getString("publisher");
                 Date publishDate = rs.getDate("publish_date");
@@ -138,18 +137,18 @@ public class ProductDAO {
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
-                int idProduct = rs.getInt("id_Product");
+                int idProduct = rs.getInt("id_product");
                 int quantity = rs.getInt("quantity");
                 int price = rs.getInt("price");
                 double averageRating = rs.getDouble("average_rating");
-                String product_description = rs.getString("Product_description");
+                String description= rs.getString("description");
                 String bookTitle = rs.getString("book_title");
                 String publisher = rs.getString("publisher");
                 Date publishDate = rs.getDate("publish_date");
-                int idAuthor = rs.getInt("ID_Author");
-                int idCategory = rs.getInt("ID_Category");
+                int idAuthor = rs.getInt("id_author");
+                int idCategory = rs.getInt("id_category");
                 Products.add(new Product(idProduct, quantity, price, averageRating,
-                        product_description, bookTitle, publisher, publishDate,
+                        description, bookTitle, publisher, publishDate,
                         idAuthor, idCategory));
             }
         } catch (SQLException e) {
@@ -175,7 +174,7 @@ public class ProductDAO {
                 String bookTitle = rs.getString("book_title");
                 String publisher = rs.getString("publisher");
                 Date publishDate = rs.getDate("publish_date");
-                int idAuthor = rs.getInt("ID_Author");
+                int idAuthor = rs.getInt("id_author");
                 Products.add(new Product(idProduct, quantity, price, averageRating,
                         productDescription, bookTitle, publisher, publishDate,
                         idAuthor, idCategory));
@@ -436,7 +435,7 @@ public class ProductDAO {
     }
 
     public void updateAverageRating(int idProduct) {
-        Product p = selectProduct(idProduct);
+        Product p = selectProductByID(idProduct);
         List<Rating> ratings = selectRatingByIDProduct(idProduct);
         int Totalrating = 0;
         for (Rating rating : ratings) {

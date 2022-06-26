@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -10,14 +11,14 @@
     <meta name="keywords" content="laptop" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+    <link href="css/css1/bootstrap.min.css" rel='stylesheet' type='text/css' />
     <!-- Custom CSS -->
-    <link href="css/style.css" rel='stylesheet' type='text/css' />
-    <link rel="stylesheet" href="css/morris.css" type="text/css"/>
+    <link href="css/css1/style.css" rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="css/css1/morris.css" type="text/css"/>
     <!-- Graph CSS -->
-    <link href="css/font-awesome.css" rel="stylesheet">
+    <link href="css/css1/font-awesome.min.css" rel="stylesheet">
     <!-- jQuery -->
-    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/js1/jquery-2.1.4.min.js"></script>
     <!-- //jQuery -->
     <!-- <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
     <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> -->
@@ -25,9 +26,9 @@
     <link rel="stylesheet" href="css/icon-font.min.css" type='text/css' />
 
     <!-- tables -->
-    <link rel="stylesheet" type="text/css" href="css/table-style.css" />
-    <link rel="stylesheet" type="text/css" href="css/basictable.css" />
-    <script type="text/javascript" src="js/jquery.basictable.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/css1/table-style.css" />
+    <link rel="stylesheet" type="text/css" href="css/css1/basictable.css" />
+    <script type="text/javascript" src="js/js1/jquery.basictable.min.js"></script>
 
 </head>
 <body>
@@ -67,7 +68,7 @@
             </div>
             <!--heder end here-->
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/home">Trang chủ</a><i class="fa fa-angle-right"></i>Sản phẩm</li>
+                <li class="breadcrumb-item"><a href="/admin">Trang chủ</a><i class="fa fa-angle-right"></i>Sản phẩm</li>
             </ol>
 
             <!-- grids -->
@@ -155,13 +156,13 @@
                                             <tbody>
                                             <c:forEach var="ProductShow" items="${listProductShow}">
                                                 <tr class="info">
-                                                    <td>${ProductShow.getID_Product()}</td>
-                                                    <td>${ProductShow.getBook_title()}</td>
-                                                    <td>${ProductShow.getProduct_description()}</td>
-                                                    <td>${ProductShow.getCategory_name()}</td>
+                                                    <td>${ProductShow.getIdProduct()}</td>
+                                                    <td>${ProductShow.getBookTitle()}</td>
+                                                    <td>${ProductShow.getProductDescription()}</td>
+                                                    <td>${ProductShow.getCategoryName()}</td>
                                                     <td>${ProductShow.getPublisher()}</td>
-                                                    <td>${ProductShow.getPublish_date()}</td>
-                                                    <td>${ProductShow.getAuthorname()}</td>
+                                                    <td>${ProductShow.getPublishDate()}</td>
+                                                    <td>${ProductShow.getAuthorName()}</td>
                                                     <td>${ProductShow.getPrice()}</td>
                                                     <td>${ProductShow.getQuantity()}</td>
                                                     <td style="text-align: center;">

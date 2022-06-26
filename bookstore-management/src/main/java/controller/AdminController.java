@@ -17,19 +17,21 @@ public class AdminController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
+        if (action == null) {
+            action = "";
+        }
         try {
             switch (action) {
-                case "admin-book": {
-
-                    showBookManagement(request, response);
-                    break;
-                }
                 case "product-management": {
-                    showProductManagement(request,response);
+                    showProductManagement(request, response);
                     break;
                 }
-                default:{
-                    showProductManagement(request,response);
+                case "category-management": {
+                    showCategoryManagement(request, response);
+                    break;
+                }
+                default: {
+                    showAdminHome(request,response);
                 }
             }
         } catch (SQLException exception) {
@@ -37,16 +39,21 @@ public class AdminController extends HttpServlet {
         }
     }
 
-    public void showBookManagement(HttpServletRequest request, HttpServletResponse response) throws
-            ServletException, IOException
-            , SQLException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("view/book/book-form");
-        dispatcher.forward(request, response);
+    public void showAdminHome(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException{
+        response.sendRedirect(request.getContextPath()+"/");
     }
+
     public void showProductManagement(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException
             , SQLException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("view/admin/product-list");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("views/admin/product-management.jsp");
+        dispatcher.forward(request, response);
+    }
+    public void showCategoryManagement(HttpServletRequest request, HttpServletResponse response) throws
+            ServletException, IOException
+            , SQLException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("views/admin/category-management.jsp");
         dispatcher.forward(request, response);
     }
 }

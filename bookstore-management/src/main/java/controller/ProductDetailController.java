@@ -32,11 +32,11 @@ public class ProductDetailController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = 0;
-        id = Integer.parseInt(request.getParameter("id_product"));
+        id = Integer.parseInt(request.getParameter("idProduct"));
         String action = request.getParameter("action");
         if(action == null) action = "";
         ProductShow ps = null;
-        ps = productDAO.convertProduct(productDAO.selectProduct(id));
+        ps = productDAO.convertProduct(productDAO.selectProductByID(id));
         if(ps == null) System.out.print("aaaaaaaa"); else System.out.print("bbbbbb");
         try {
             switch (action) {
@@ -67,7 +67,7 @@ public class ProductDetailController extends HttpServlet {
                 }
                 case "searchname":
                 {
-                    searchname(request,response);
+                    searchName(request,response);
                     break;
                 }
                 case "detail":
@@ -76,7 +76,7 @@ public class ProductDetailController extends HttpServlet {
                     break;
                 }
                 default:
-                    Product_detail(request, response, ps);
+                    showProductDetail(request, response, ps);
                     break;
             }
         } catch (Exception ex)
@@ -84,7 +84,7 @@ public class ProductDetailController extends HttpServlet {
             throw new ServletException(ex);
         }
     }
-    private void searchname(HttpServletRequest request, HttpServletResponse response)
+    private void searchName(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException
     {
         String name = request.getParameter("namesearch");
@@ -96,7 +96,7 @@ public class ProductDetailController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("views/product/product-detail.jsp");
         dispatcher.forward(request, response);
     }
-    protected void Product_detail(HttpServletRequest request, HttpServletResponse response, ProductShow ps) throws ServletException, IOException
+    protected void showProductDetail(HttpServletRequest request, HttpServletResponse response, ProductShow ps) throws ServletException, IOException
     {
         List<ProductShow> listProductShow = productDAO.convertProduct(productDAO.selectAllProduct());
         List<ProductShow> listPSsameCategory = productDAO.GetBookWithSameCategory(ps);
@@ -108,7 +108,7 @@ public class ProductDetailController extends HttpServlet {
         List<Category> categories = productDAO.selectAllCategory();
         request.setAttribute("categories", categories);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("view/product/product-detail.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("views/product/product-detail.jsp");
         dispatcher.forward(request, response);
     }
     public void showDetailForm(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException

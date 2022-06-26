@@ -76,7 +76,7 @@
             <a href="index.html" class="logo pull-left"><h4 class="title">KBOOK </h4></a>
             <nav id="menu" class="pull-right">
                 <ul>
-                    <li><a href="./displayproduct">Quay về cửa hàng</a>
+                    <li><a href="/product">Quay về cửa hàng</a>
                 </ul>
             </nav>
         </div>
@@ -90,15 +90,15 @@
             <div class="span9">
                 <div class="row">
                     <div class="span4">
-                        <a href="themes/images/cloth/thebook ${ProductShow.getID_Product()}.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 1"><img alt="" src="themes/images/cloth/thebook ${ProductShowdetail.getID_Product()}.jpg"></a>
+                        <a href="themes/images/cloth/thebook ${ProductShow.getIdProduct()}.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 1"><img alt="" src="themes/images/cloth/thebook ${ProductShowdetail.getIdProduct()}.jpg"></a>
 
                     </div>
                     <div class="span5">
                         <address>
-                            <strong>Tên sách:</strong> <span>${ProductShowdetail.getBook_title()}</span><br>
-                            <strong>Điểm đánh giá:</strong> <span>${ProductShowdetail.getAvarage_rating()}</span><br>
+                            <strong>Tên sách:</strong> <span>${ProductShowdetail.getBookTitle()}</span><br>
+                            <strong>Điểm đánh giá:</strong> <span>${ProductShowdetail.getAverageRating()}</span><br>
                             <strong>Số lượng hàng còn lại:</strong> <span>${ProductShowdetail.getQuantity()}</span><br>
-                            <strong>Thể Loại:</strong> <span>${ProductShowdetail.getCategory_name()}</span><br>
+                            <strong>Thể Loại:</strong> <span>${ProductShowdetail.getCategoryName()}</span><br>
                             <strong>Lượt xem:</strong> <span>21932</span><br>
                         </address>
                         <h4><strong>Giá: ${ProductShowdetail.getPrice()}</strong></h4>
@@ -125,7 +125,7 @@
                             <li class=""><a href="#profile">Thông tin sản phẩm</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active" id="home">${ProductShowdetail.getProduct_description()}</div>
+                            <div class="tab-pane active" id="home">${ProductShowdetail.getProductDescription()}</div>
                             <div class="tab-pane" id="profile">
                                 <table class="table table-striped shop_attributes">
                                     <tbody>
@@ -135,11 +135,11 @@
                                     </tr>
                                     <tr class="alt">
                                         <th>Tên tác giả</th>
-                                        <td>${ProductShowdetail.getAuthorname()}</td>
+                                        <td>${ProductShowdetail.getAuthorName()}</td>
                                     </tr>
                                     <tr class="">
                                         <th>Ngày xuất bản</th>
-                                        <td>${ProductShowdetail.getPublish_date()}</td>
+                                        <td>${ProductShowdetail.getPublishDate()}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -163,9 +163,9 @@
                                             <li class="span3">
                                                 <div class="product-box">
                                                     <span class="sale_tag"></span>
-                                                    <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />"><img alt="" src="themes/images/cloth/thebook ${ProductShowdetail.getID_Product()}.jpg"></a><br/>
-                                                    <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />" class="title">${ProductShow.getBook_title()}</a><br/>
-                                                    <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />" class="category">${ProductShow.getCategory_name()}</a>
+                                                    <a href="productDetail?idProduct=<c:out value='${ProductShow.getIdProduct()}' />"><img alt="" src="themes/images/cloth/thebook ${ProductShowdetail.getIdProduct()}.jpg"></a><br/>
+                                                    <a href="productDetail?idProduct=<c:out value='${ProductShow.getIdProduct()}' />" class="title">${ProductShow.getBook_title()}</a><br/>
+                                                    <a href="productDetail?idProduct=<c:out value='${ProductShow.getIdProduct()}' />" class="category">${ProductShow.getCategory_name()}</a>
                                                     <p class="price">${ProductShow.getPrice()}</p>
                                                 </div>
                                             </li>
@@ -178,9 +178,9 @@
                                             <li class="span3">
                                                 <div class="product-box">
                                                     <span class="sale_tag"></span>
-                                                    <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />"><img alt="" src="themes/images/cloth/thebook ${ProductShowdetail.getID_Product()}.jpg"></a><br/>
-                                                    <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />" class="title">${ProductShow.getBook_title()}</a><br/>
-                                                    <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />" class="category">${ProductShow.getCategory_name()}</a>
+                                                    <a href="productDetail?idProduct=<c:out value='${ProductShow.getIdProduct()}' />"><img alt="" src="themes/images/cloth/thebook ${ProductShowdetail.getIdProduct()}.jpg"></a><br/>
+                                                    <a href="productDetail?idProduct=<c:out value='${ProductShow.getIdProduct()}' />" class="title">${ProductShow.getBook_title()}</a><br/>
+                                                    <a href="productDetail?idProduct=<c:out value='${ProductShow.getIdProduct()}' />" class="category">${ProductShow.getCategory_name()}</a>
                                                     <p class="price">${ProductShow.getPrice()}</p>
                                                 </div>
                                             </li>
@@ -203,13 +203,13 @@
                             <div class="carousel-inner">
                                 <div class="active item">
                                     <ul class="thumbnails listing-products">
-                                        <c:forEach var="ProductShow" items="${listPSsameAuthor}" begin = "0" end = "2">
+                                        <c:forEach var="productShow" items="${listPSsameAuthor}" begin = "0" end = "2">
                                             <li class="span3">
                                                 <div class="product-box">
                                                     <span class="sale_tag"></span>
-                                                    <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />"><img alt="" src="themes/images/cloth/thebook ${ProductShowdetail.getID_Product()}.jpg"></a><br/>
-                                                    <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />" class="title">${ProductShow.getBook_title()}</a><br/>
-                                                    <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />" class="category">${ProductShow.getCategory_name()}</a>
+                                                    <a href="productDetail?idProduct=<c:out value='${productShow.getIdProduct()}' />"><img alt="" src="themes/images/cloth/thebook ${ProductShowdetail.getIdProduct()}.jpg"></a><br/>
+                                                    <a href="productDetail?idProduct=<c:out value='${productShow.getIdProduct()}' />" class="title">${ProductShow.getBookTitle()}</a><br/>
+                                                    <a href="productDetail?idProduct=<c:out value='${productShow.getIdProduct()}' />" class="category">${ProductShow.getCategoryName()}</a>
                                                     <p class="price">${ProductShow.getPrice()}</p>
                                                 </div>
                                             </li>
@@ -222,9 +222,9 @@
                                             <li class="span3">
                                                 <div class="product-box">
                                                     <span class="sale_tag"></span>
-                                                    <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />"><img alt="" src="themes/images/cloth/thebook ${ProductShowdetail.getID_Product()}.jpg"></a><br/>
-                                                    <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />" class="title">${ProductShow.getBook_title()}</a><br/>
-                                                    <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />" class="category">${ProductShow.getCategory_name()}</a>
+                                                    <a href="productDetail?idProduct=<c:out value='${ProductShow.getIdProduct()}' />"><img alt="" src="themes/images/cloth/thebook ${ProductShowdetail.getIdProduct()}.jpg"></a><br/>
+                                                    <a href="productDetail?idProduct=<c:out value='${ProductShow.getIdProduct()}' />" class="title">${ProductShow.getBookTitle()}</a><br/>
+                                                    <a href="productDetail?idProduct=<c:out value='${ProductShow.getIdProduct()}' />" class="category">${ProductShow.getCategoryName()}</a>
                                                     <p class="price">${ProductShow.getPrice()}</p>
                                                 </div>
                                             </li>
@@ -253,9 +253,9 @@
                                         <li class="span3">
                                             <div class="product-box">
                                                 <span class="sale_tag"></span>
-                                                <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />"><img alt="" src="themes/images/cloth/thebook ${ProductShowdetail.getID_Product()}.jpg"></a><br/>
-                                                <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />" class="title">${ProductShow.getBook_title()}</a><br/>
-                                                <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />" class="category">${ProductShow.getCategory_name()}</a>
+                                                <a href="productDetail?idProduct=<c:out value='${ProductShow.getIdProduct()}' />"><img alt="" src="themes/images/cloth/thebook ${ProductShowdetail.getIdProduct()}.jpg"></a><br/>
+                                                <a href="productDetail?idProduct=<c:out value='${ProductShow.getIdProduct()}' />" class="title">${ProductShow.getBookTitle()}</a><br/>
+                                                <a href="productDetail?idProduct=<c:out value='${ProductShow.getIdProduct()}' />" class="category">${ProductShow.getCategoryName()}</a>
                                                 <p class="price">${ProductShow.getPrice()}</p>
                                             </div>
                                         </li>
@@ -269,9 +269,9 @@
                                         <li class="span3">
                                             <div class="product-box">
                                                 <span class="sale_tag"></span>
-                                                <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />"><img alt="" src="themes/images/cloth/thebook ${ProductShowdetail.getID_Product()}.jpg"></a><br/>
-                                                <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />" class="title">${ProductShow.getBook_title()}</a><br/>
-                                                <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />" class="category">${ProductShow.getCategory_name()}</a>
+                                                <a href="productDetail?idProduct=<c:out value='${ProductShow.getIdProduct()}' />"><img alt="" src="themes/images/cloth/thebook ${ProductShowdetail.getIdProduct()}.jpg"></a><br/>
+                                                <a href="productDetail?idProduct=<c:out value='${ProductShow.getIdProduct()}' />" class="title">${ProductShow.getBookTitle()}</a><br/>
+                                                <a href="productDetail?idProduct=<c:out value='${ProductShow.getIdProduct()}' />" class="category">${ProductShow.getCategoryName()}</a>
                                                 <p class="price">${ProductShow.getPrice()}</p>
                                             </div>
                                         </li>
@@ -306,7 +306,7 @@
                 </ul>
             </div>
             <div class="span5">
-                <p class="logo"><!-- <img src="themes/images/logo.png" class="site_logo" alt=""> --><h4>ILAPTOP</h4></p>
+                <p class="logo"><!-- <img src="themes/images/logo.png" class="site_logo" alt=""> --><h4>NobMan</h4></p>
                 <p style="color: white;">Website chúng tôi chuyên cung cấp các sản phẩm chất lượng có uy tín và mới nhất trên thị trường hiện nay
                     <br/>Hãy ghé thăm trang web của chúng tôi và đừng bỏ lỡ các sản phẩm mới nhé!</p>
                 <div style="margin-left: 60px;">

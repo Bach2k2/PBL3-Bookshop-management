@@ -73,7 +73,7 @@ public class ProductController extends HttpServlet {
             throw new ServletException(ex);
         }
     }
-    private void searchBook(HttpServletRequest request, HttpServletResponse response)
+    public void searchBook(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         String category[] = request.getParameterValues("categoriesearch");
         List<ProductShow> listProductShow = productDAO.GetPSListByCategory(category);
@@ -83,7 +83,7 @@ public class ProductController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("view/product/product-list.jsp");
         dispatcher.forward(request, response);
     }
-    private void searchprice(HttpServletRequest request, HttpServletResponse response)
+    public void searchprice(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         String price[] = request.getParameterValues("pricesearch");
         for(String s: price)
@@ -97,7 +97,7 @@ public class ProductController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("views/product/product-list.jsp");
         dispatcher.forward(request, response);
     }
-    private void listProduct(HttpServletRequest request, HttpServletResponse response)
+    public void listProduct(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         List<ProductShow> listProductShow = productDAO.convertProduct(productDAO.selectAllProduct());
         request.setAttribute("listProductShow", listProductShow);
@@ -105,6 +105,6 @@ public class ProductController extends HttpServlet {
         request.setAttribute("categories", categories);
         RequestDispatcher dispatcher = request.getRequestDispatcher("views/product/product-list.jsp");
         dispatcher.forward(request, response);
-        //response.sendRedirect("Product-list.jsp");
     }
+
 }
