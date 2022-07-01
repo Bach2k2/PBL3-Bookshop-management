@@ -13,9 +13,11 @@ public class CustomerDAO extends AbstractDAO<Customer> implements ICustomerDAO {
     private static final String INSERT_CUSTOMERS_SQL = "INSERT INTO customer" + "(firstname,lastname,gender,date_of_birth,email,phone,address,id_account)" +
             " VALUES" + "(?,?,?,?,?,?,?,?)";
     private static final String SELECT_ALL_CUSTOMERS = "SELECT id_customer, firstname,lastname,gender,date_of_birth,email,phone,address,id_account FROM customer";
-    private static final String SELECT_CUSTOMERS_BY_ID = "SELECT firstname,lastname,gender,date_of_birth,email,phone,address, FROM customer where id_customer=?";
+    private static final String SELECT_CUSTOMERS_BY_ID = "SELECT firstname,lastname,gender,date_of_birth,email,phone,address,id_account FROM customer where id_customer=?";
     private static final String DELETE_CUSTOMERS_SQL = "DELETE FROM customer where id_customer=?";
     private static final String UPDATE_CUSTOMERS_SQL = "UPDATE customer SET firstname=?,lastname=?,gender=?,date_of_birth=?,email=?,phone=?,address=?,id_account=? where id_customer=?";
+    private static final String SELECT_CUSTOMER_BY_ACCOUNT_ID = "SELECT * FROM customer where id_account=?";
+
 
     private Connection connection = null;
     private DBRepository dbRepository = new DBRepository();
@@ -49,7 +51,51 @@ public class CustomerDAO extends AbstractDAO<Customer> implements ICustomerDAO {
 
     @Override
     public Customer findCustomerById(int id) {
-        return (Customer) query(SELECT_CUSTOMERS_BY_ID, new CustomerMapper(), id);
+        Customer customer = null;
+        try (PreparedStatement ps = this.connection.prepareStatement(SELECT_CUSTOMER_BY_ACCOUNT_ID);) {
+            System.out.println(ps);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String firstName = rs.getString("firstname");
+                String lastName = rs.getString("lastname");
+                Boolean gender = rs.getBoolean("gender");
+                Date dateOfBirth=rs.getDate("date_of_birth");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                int idAccount=rs.getInt("id_account");
+                customer = new Customer(id, firstName, lastName, gender,dateOfBirth, email, phone, address, idAccount);
+            }
+
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return customer;
+    }
+
+    public Customer findCustomerByIdAccount(int idAccount) {
+        Customer customer = null;
+        try (PreparedStatement ps = this.connection.prepareStatement(SELECT_CUSTOMER_BY_ACCOUNT_ID);) {
+            System.out.println(ps);
+            ps.setInt(1,idAccount);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id_customer");
+                String firstName = rs.getString("firstname");
+                String lastName = rs.getString("lastname");
+                Boolean gender = rs.getBoolean("gender");
+                Date dateOfBirth=rs.getDate("date_of_birth");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                customer = new Customer(id, firstName, lastName, gender,dateOfBirth, email, phone, address, idAccount);
+            }
+
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return customer;
     }
 
     @Override

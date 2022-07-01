@@ -46,7 +46,7 @@
             $('table #delete-btn').on('click', function () {
                 {
                     var id = $(this).parent().find('#deleteId').val();
-                    $('#confirmDelete #idCategoryDelete').val(id);
+                    $('#confirmDelete #idAuthorDelete').val(id);
                 }
             });
             $('table #edit-btn').on('click', function () {
@@ -57,10 +57,11 @@
                     data: {action: 'find-author', idAuthor: id},
 
                     success: function (result) {
-                        $('#editProductModal #upt_idCategory').val(result.idCategory);
-                        $('#editProductModal #upt_categoryName').val(result.categoryName);
+                        $('#editProductModal #upt_idAuthor').val(result.idAuthor);
+                        $('#editProductModal #upt_authorName').val(result.authorName);
+                        $('#editProductModal #upt_dateOfBirth').val(result.dateOfBirth);
                         $('#editProductModal #upt_description').val(result.description);
-                        $('#editProductModal #idCategoryEdit').val(result.idCategory);
+                        $('#editProductModal #idAuthorEdit').val(result.idAuthor);
                     }
                 });
             });
@@ -118,24 +119,29 @@
                                  -->
                                 <div class="agile-tables">
                                     <div class="w3l-table-info">
-                                        <h2>Thêm thể loại</h2>
+                                        <h2>Thêm tác giả</h2>
                                         <div class="row">
                                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
 
                                             </div>
                                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                                <form action="admin?action=create-product" method="post">
+                                                <form action="admin?action=create-author" method="post">
                                                     <div class="form-group">
-                                                        <label for="category_name">Tên thể loại:</label>
-                                                        <input type="text" class="form-control" id="category_name"
-                                                               name="categoryName">
+                                                        <label for="author_name">Tên tác giả:</label>
+                                                        <input type="text" class="form-control" id="author_name"
+                                                               name="authorName">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="date_of_birth">Ngày sinh:</label>
+                                                        <input type="text" class="form-control" id="date_of_birth"
+                                                               name="dateOfBirth">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="description">Mô tả:</label>
                                                         <textarea class="form-control" rows="5" id="description"
                                                                   name="description"></textarea>
                                                     </div>
-                                                    <button type="submit" class="btn btn-default">Thêm thể loại</button>
+                                                    <button type="submit" class="btn btn-default">Thêm tác giả </button>
                                                 </form>
                                             </div>
                                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
@@ -157,10 +163,10 @@
                                             <tbody>
                                             <c:forEach var="author" items="${authorList}">
                                                 <tr class="info">
-                                                    <td>${category.getIdAuthor()}</td>
-                                                    <td>${category.getAuthorName()}</td>
-                                                    <td>${category.getDateOfBirth()}</td>
-                                                    <td>${category.getDescription()}</td>
+                                                    <td>${author.getIdAuthor()}</td>
+                                                    <td>${author.getAuthorName()}</td>
+                                                    <td>${author.getDateOfBirth()}</td>
+                                                    <td>${author.getDescription()}</td>
                                                     <td style="text-align: center;">
 							                            <span>
 								                            <a id="edit-btn" data-target="#editProductModal"
@@ -178,7 +184,7 @@
                                                                  data-target="#confirmDelete">
                                         <i class="fa fa-trash-o" data-toggle="tooltip" aria-hidden="true"></i>Delete</a>
                                                         <input type="hidden" id="deleteId"
-                                                               value="${category.getIdCategory()}">
+                                                               value="${author.getIdAuthor()}">
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -199,24 +205,30 @@
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal">&times;
                                                     </button>
-                                                    <h4 class="modal-title">Cập nhật thông tin sản phẩm</h4>
+                                                    <h4 class="modal-title">Cập nhật thông tin tác giả</h4>
                                                 </div>
-                                                <form action="${pageContext.request.contextPath}/admin?action=edit-product"
+                                                <form action="${pageContext.request.contextPath}/admin?action=edit-author"
                                                       method="post">
                                                     <div class="modal-body">
-                                                        <p>Mời bạn nhập thông tin thể loại:</p>
+                                                        <p>Mời bạn nhập thông tin tác giả:</p>
 
                                                         <div class="form-group">
-                                                            <label>Mã thể loại:</label>
+                                                            <label>Mã tác giả:</label>
                                                             <input type="text" class="form-control"
-                                                                   id="upt_idCategory"
-                                                                   name="idCategory2" readonly>
+                                                                   id="upt_idAuthor"
+                                                                   name="idAuthor2" readonly>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="upt_categoryName">Tên thể loại:</label>
+                                                            <label for="upt_authorName">Tên tác giả</label>
                                                             <input type="text" class="form-control"
-                                                                   id="upt_categoryName"
-                                                                   name="categoryName2">
+                                                                   id="upt_authorName"
+                                                                   name="authorName2">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="upt_dateOfBirth">Ngày sinh</label>
+                                                            <input type="date" class="form-control"
+                                                                   id="upt_dateOfBirth"
+                                                                   name="dateOfBirth2">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="upt_description">Mô tả:</label>
@@ -236,7 +248,7 @@
                                                             Close
                                                         </button>
                                                     </div>
-                                                    <input type="hidden" id="idCategoryEdit" name="idCategoryEdit">
+                                                    <input type="hidden" id="idAuthorEdit" name="idAuthorEdit">
                                                 </form>
                                             </div>
 
@@ -257,7 +269,7 @@
                                         <!-- Modal content-->
                                         <div class="modal-content">
                                             <form method="post"
-                                                  action="${pageContext.request.contextPath}/admin?action=delete">
+                                                  action="${pageContext.request.contextPath}/admin?action=delete-author">
                                                 <div class="modal-header">
                                                     <h3>Delete this category</h3>
                                                     <button type="button" class="close" data-dismiss="modal">&times;

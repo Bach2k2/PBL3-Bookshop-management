@@ -40,6 +40,11 @@ public class CustomerController extends HttpServlet {
 
                 case "delete":
                     break;
+                case "edit-profile":
+                {
+                    showEditProfileForm(request,response);
+                    break;
+                }
                 default:
                     showCustomerList(request, response);
 
@@ -48,6 +53,9 @@ public class CustomerController extends HttpServlet {
             exception.printStackTrace();
         }
     }
+
+
+
     public void showCustomerList(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         request.setAttribute("customerList",customerService.findAllCustomer());
         System.out.println("hello here, Customer list");
@@ -58,5 +66,8 @@ public class CustomerController extends HttpServlet {
     public void createCustomer(HttpServletRequest request, HttpServletResponse response)throws SQLException, ServletException
     {
 
+    }
+    public void showEditProfileForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        request.getRequestDispatcher("/views/user/edit-profile.jsp").forward(request,response);
     }
 }

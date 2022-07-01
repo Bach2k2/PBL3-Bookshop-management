@@ -55,22 +55,17 @@ public class HomeController extends HttpServlet {
             case "register":
                 response.sendRedirect("views/account/register.jsp");
                 break;
-            case "login":
-            {
-
-                {
-                    Cookie arrC[]=request.getCookies();
-                    for(Cookie c:arrC)
-                    {
-                        if(c.getName().equals("user")) request.setAttribute("username",c.getValue());
-                        if(c.getName().equals("pass")) request.setAttribute("password",c.getValue());
+            case "login": {
+                    Cookie arrC[] = request.getCookies();
+                    for (Cookie c : arrC) {
+                        if (c.getName().equals("user")) request.setAttribute("username", c.getValue());
+                        if (c.getName().equals("pass")) request.setAttribute("password", c.getValue());
                     }
-                }
-                request.getRequestDispatcher("views/account/login.jsp").forward(request,response);
+                request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
                 break;
             }
             case "logout":
-                logoutUser(request,response);
+                logoutUser(request, response);
                 break;
             case "product":
                 response.sendRedirect("views/product/product-list.jsp");
@@ -81,12 +76,19 @@ public class HomeController extends HttpServlet {
     }
 
     public void showHomePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account == null) {
+            request.setAttribute("idAccount", -1);
+        } else {
+            request.setAttribute("idAccount", account.getIdAccount());
+        }
         RequestDispatcher dispatcher = request.getRequestDispatcher("views/home-page.jsp");
         dispatcher.forward(request, response);
     }
 
     public void loginUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try{
+        try {
             request.setAttribute("message", null);
             Account model = null;
             String username = request.getParameter("username");
@@ -100,22 +102,18 @@ public class HomeController extends HttpServlet {
                 request.setAttribute("check", true);
                 request.setAttribute("username", model.getUsername());
 
-                Cookie u=new Cookie("user",username);
-                Cookie p=new Cookie("pass",password);
+                Cookie u = new Cookie("user", username);
+                Cookie p = new Cookie("pass", password);
                 u.setMaxAge(60);
                 p.setMaxAge(60);
                 response.addCookie(u);// luu u va p len tren edge;
                 response.addCookie(p);
 
-                //      request.getRequestDispatcher(request.getContextPath() + "/view/account/login.jsp").forward(request, response);
-                //   response.sendRedirect(request.getContextPath()+"/view/account/login.jsp");
                 if (model.getRole().getCode().equals("CUSTOMER")) {
                     System.out.println("Vào trang customer");
-//                response.sendRedirect("");
                 } else if (model.getRole().getCode().equals("ADMIN")) {  //Loi Form Util
                     System.out.println("Vào trang admin");
-                    //response.sendRedirect(request.getContextPath());
-//                request.getRequestDispatcher(request.getContextPath() + "views/admin/admin-home.jsp").forward(request, response);
+
                 }
                 showHomePage(request,response);
             } else {
@@ -124,8 +122,7 @@ public class HomeController extends HttpServlet {
                 System.out.println("Đăng nhập thất bại");
                 request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
             }
-        }catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
 
@@ -164,10 +161,11 @@ public class HomeController extends HttpServlet {
             e.printStackTrace();
         }
     }
+
     public void logoutUser(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session=request.getSession();
+        HttpSession session = request.getSession();
         session.removeAttribute("account");
         response.sendRedirect(request.getContextPath() + "/home");
     }

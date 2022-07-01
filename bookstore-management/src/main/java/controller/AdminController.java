@@ -6,6 +6,7 @@ import model.Account;
 import model.Author;
 import model.Category;
 import model.Product;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -32,6 +33,7 @@ public class AdminController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
         if (action == null) {
             action = "";
@@ -46,32 +48,32 @@ public class AdminController extends HttpServlet {
                     editProduct(request, response);
                     break;
                 }
-                case "delete": {
+                case "delete-product": {
                     deleteProduct(request, response);
                     break;
                 }
                 case "create-category": {
-                    createProduct(request, response);
+                   createCategory(request,response);
                     break;
                 }
                 case "edit-category": {
-                    editProduct(request, response);
+                    editCategory(request, response);
                     break;
                 }
                 case "delete-category": {
-                    deleteProduct(request, response);
+                    deleteCategory(request, response);
                     break;
                 }
                 case "create-author": {
-                    createProduct(request, response);
+                    createAuthor(request, response);
                     break;
                 }
                 case "edit-author": {
-                    editProduct(request, response);
+                    editAuthor(request, response);
                     break;
                 }
                 case "delete-author": {
-                    deleteProduct(request, response);
+                    deleteAuthor(request, response);
                     break;
                 }
             }
@@ -81,6 +83,8 @@ public class AdminController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
         if (action == null) {
             action = "";
@@ -130,7 +134,7 @@ public class AdminController extends HttpServlet {
             } else {
                 request.setAttribute("link", "/home");
                 request.setAttribute("message", "Quay về trang chủ");
-                request.getRequestDispatcher("views/admin/error-authentication.jsp").forward(request, response);
+                request.getRequestDispatcher("views/authorization/error-authentication.jsp").forward(request, response);
                 return;
             }
         }
@@ -257,9 +261,26 @@ public class AdminController extends HttpServlet {
         newCategory.setCategoryName(request.getParameter("categoryName"));
         newCategory.setDescription(request.getParameter("description"));
         System.out.println("thêm mới thành công thanh cong");
-        response.sendRedirect("/admin?action=product-management");
+        response.sendRedirect("/admin?action=category-management");
     }
 
+    public void editCategory(HttpServletRequest request, HttpServletResponse response) throws
+            ServletException, IOException, SQLException {
+        int id = Integer.parseInt(request.getParameter("idCategoryEdit"));
+        Category category = productDAO.selectCategory(id);
+        category.setCategoryName(request.getParameter("categoryName2"));
+        category.setDescription(request.getParameter("description2"));
+        productDAO.updateCategory(category);
+        System.out.println("Cap nhat thanh cong");
+        response.sendRedirect("/admin?action=category-management");
+    }
+
+    public void deleteCategory(HttpServletRequest request, HttpServletResponse response) throws
+            ServletException, IOException, SQLException {
+        int id = Integer.parseInt(request.getParameter("idCategoryDelete"));
+        productDAO.deleteCategory(id);
+        response.sendRedirect("/admin?action=category-management");
+    }
 
     public void findAuthor(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException, SQLException {
@@ -275,13 +296,44 @@ public class AdminController extends HttpServlet {
 
     public void createAuthor(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException, SQLException {
-        Author newAuthor = new Author();
-        newAuthor.setAuthorName(request.getParameter("categoryName"));
-//        newAuthor.setDateOfBirth(request.getParameter("categoryName"));
-        newAuthor.setDescription(request.getParameter("description"));
-        System.out.println("thêm mới thành công thanh cong");
-        response.sendRedirect("/admin?action=product-management");
+        try {
+            Author newAuthor = new Author();
+            newAuthor.setAuthorName(request.getParameter("authorName"));
+            newAuthor.setDateOfBirth(new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("dateOfBirth")));
+            newAuthor.setDescription(request.getParameter("description"));
+            System.out.println("thêm mới thành công thanh cong");
+            response.sendRedirect("/admin?action=product-management");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
+
+    public void editAuthor(HttpServletRequest request, HttpServletResponse response) throws
+            ServletException, IOException, SQLException {
+        try{
+            int id = Integer.parseInt(request.getParameter("idAuthorEdit"));
+            Author author = productDAO.selectAuthor(id);
+            author.setAuthorName(request.getParameter("categoryName2"));
+            author.setDateOfBirth(new SimpleDateFormat("dd-MM-yyyy").parse(request.getParameter("dateOfBirth2")));
+            author.setDescription(request.getParameter("description2"));
+            productDAO.updateAuthor(author);
+            System.out.println("Cap nhat thanh cong");
+            response.sendRedirect("/admin?action=author-management");
+        }catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void deleteAuthor(HttpServletRequest request, HttpServletResponse response) throws
+            ServletException, IOException, SQLException {
+        int id = Integer.parseInt(request.getParameter("idAuthorDelete"));
+        productDAO.deleteAuthor(id);
+        response.sendRedirect("/admin?action=author-management");
+    }
+
 
 }
 

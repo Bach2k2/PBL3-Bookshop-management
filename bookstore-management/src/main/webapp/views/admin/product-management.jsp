@@ -374,7 +374,7 @@
                                             <!-- Modal content-->
                                             <div class="modal-content">
                                                 <form method="post"
-                                                      action="${pageContext.request.contextPath}/admin?action=delete">
+                                                      action="${pageContext.request.contextPath}/admin?action=delete-product">
                                                     <div class="modal-header">
                                                         <h3>Delete a Book</h3>
                                                         <button type="button" class="close" data-dismiss="modal">&times;

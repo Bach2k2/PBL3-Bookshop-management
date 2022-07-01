@@ -43,4 +43,9 @@ public class CustomerService implements ICustomerService {
     public Customer findByUsernameAndPasswordAndStatus(String username, String password, Boolean status) {
         return null;
     }
+
+    @Override
+    public Customer findByIdAccount(int idAccount){
+        return customerDAO.findCustomerByIdAccount(idAccount);
+    }
 }

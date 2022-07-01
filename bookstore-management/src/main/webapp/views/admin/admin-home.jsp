@@ -60,24 +60,20 @@
 
                 <div class="profile_details w3l">
                     <ul>
-                        <li class="dropdown profile_details_drop">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <div class="profile_img">
-                                    <span class="prfil-img"><img src="<%=request.getContextPath()%>/images/admin/in4.jpg" alt=""> </span>
-                                    <div class="user-name">
-                                        <p>Thông tin</p>
-                                        <span>Admin</span>
-                                    </div>
-                                    <i class="fa fa-angle-down"></i>
-                                    <i class="fa fa-angle-up"></i>
-                                    <div class="clearfix"></div>
+                        <li>
+                            <div class="dropdown">
+                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                   id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false">
+                                    Xin chào <span>${username}</span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a href="#"><i class="fa fa-cog"></i> Cài đặt</a>
+                                    <a href=""><i class="fa fa-user"></i>Thông tin</a>
+                                    <a href="/home?action=logout"><i
+                                            class="fa fa-sign-out"></i> Đăng xuất</a>
                                 </div>
-                            </a>
-                            <ul class="dropdown-menu drp-mnu">
-                                <li> <a href="#"><i class="fa fa-cog"></i> Cài đặt</a> </li>
-                                <li> <a href="#"><i class="fa fa-user"></i> Thông tin</a> </li>
-                                <li> <a href="/home?action=logout"><i class="fa fa-sign-out"></i> Đăng xuất</a> </li>
-                            </ul>
+                            </div>
                         </li>
                     </ul>
                 </div>

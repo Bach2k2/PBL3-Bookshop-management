@@ -5,6 +5,7 @@ import model.*;
 import dao.DBRepository;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,8 +46,21 @@ public class ProductDAO {
             + "(?,?,?,?,?,?,?);";
     private static String SELECT_ORDER_SQL = "SELECT * FROM orders ORDER BY ID_ORDER DESC LIMIT 1";
 
-    private static String SELECT_CATEGORY_BY_ID = "SELECT * FROM category WHERE ID_Category = ?";
+    private static String SELECT_CATEGORY_BY_ID = "SELECT * FROM category WHERE id_category = ?";
+    private static String UPDATE_CATEGORY_SQL = "UPDATE category set"
+            + "category_name = ?, "
+            + "description = ?, "
+            + "where id_category = ?;";
+    private static String DELETE_CATEGORY_SQL = "DELETE from category"
+            + "where id_category = ?;";
     private static String SELECT_AUTHOR_BY_ID = "SELECT * FROM author WHERE ID_Author = ?";
+    private static String UPDATE_AUTHOR_SQL = "UPDATE author set"
+            + "author_name = ?, "
+            + "date_of_birth = ?, "
+            + "description = ?, "
+            + "where id_author = ?;";
+    private static String DELETE_AUTHOR_SQL = "DELETE from category"
+            + "where id_author = ?;";
     //private static String SELECT_CATEGORYNAME_BY_ID = "SELECT categoryname FROM Category WHERE ID_Category = ?";
     private static String SELECT_ALL_CATEGORY = "SELECT * FROM category";
     private static String SELECT_ALL_AUTHOR = "SELECT * FROM author";
@@ -263,6 +277,25 @@ public class ProductDAO {
         }
         return categories;
     }
+    public boolean updateCategory(Category category) throws SQLException {
+        boolean rowUpdated;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CATEGORY_SQL);) {
+            System.out.println("updated category:" + preparedStatement);
+            preparedStatement.setString(1, category.getCategoryName());
+            preparedStatement.setString(2, category.getDescription());
+            preparedStatement.setInt(3, category.getIdCategory());
+            rowUpdated = preparedStatement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    }
+    public boolean deleteCategory(int categoryId) throws SQLException {
+        boolean rowDeleted;
+        try (PreparedStatement statement = this.connection.prepareStatement(DELETE_CATEGORY_SQL);) {
+            statement.setInt(1, categoryId);
+            rowDeleted = statement.executeUpdate() > 0;
+        }
+        return rowDeleted;
+    }
 
     public List<String> getCategoryName(List<Category> categories) {
         List<String> catename = new ArrayList<>();
@@ -337,6 +370,26 @@ public class ProductDAO {
             printSQLException(e);
         }
         return Authors;
+    }
+    public boolean updateAuthor(Author author) throws SQLException {
+        boolean rowUpdated;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_AUTHOR_SQL);) {
+            System.out.println("updated author:" + preparedStatement);
+            preparedStatement.setString(1, author.getAuthorName());
+            preparedStatement.setDate(2, (Date) author.getDateOfBirth());
+            preparedStatement.setString(3, author.getDescription());
+            preparedStatement.setInt(4, author.getIdAuthor());
+            rowUpdated = preparedStatement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    }
+    public boolean deleteAuthor(int authorId) throws SQLException {
+        boolean rowDeleted;
+        try (PreparedStatement statement = this.connection.prepareStatement(DELETE_AUTHOR_SQL);) {
+            statement.setInt(1, authorId);
+            rowDeleted = statement.executeUpdate() > 0;
+        }
+        return rowDeleted;
     }
 
     public List<String> getAuthorName(List<Author> Authors) {

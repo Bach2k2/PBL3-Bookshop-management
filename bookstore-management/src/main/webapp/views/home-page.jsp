@@ -60,7 +60,7 @@
                             <nav class="main-menu">
                                 <ul class="menu-area-main">
                                     <li class="active"><a href="/home">Home</a></li>
-                                    <li><a href="/product">Our Books</a></li>
+                                    <li><a href="/product?ID_U=${idAccount}">Our Books</a></li>
                                     <li><a href="/admin">Management</a></li>
                                     <li><a href="/home?action=contact">Contact us</a></li>
                                     <li><a href="/home?action=register">Sign up</a></li>

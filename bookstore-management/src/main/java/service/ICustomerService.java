@@ -11,4 +11,5 @@ public interface ICustomerService {
     boolean deleteById(int id);
     void save(Customer customer);
     Customer findByUsernameAndPasswordAndStatus(String username, String password, Boolean status);
+    Customer findByIdAccount(int idAccount);
 }
