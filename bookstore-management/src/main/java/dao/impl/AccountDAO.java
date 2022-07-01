@@ -35,6 +35,7 @@ public class AccountDAO extends AbstractDAO<Account> implements IAccountDAO {
         boolean check=false;
         try {
             PreparedStatement ps = this.connection.prepareStatement(INSERT_ACCOUNTS_SQL);
+            System.out.println(ps);
             ps.setString(1, account.getUsername());
             ps.setString(2, account.getPassword());
             ps.setDate(3, new Date(account.getSignUpDate().getTime()));
@@ -55,6 +56,7 @@ public class AccountDAO extends AbstractDAO<Account> implements IAccountDAO {
        // return (Account) query(SELECT_ACCOUNT_BY_ID, new AccountMapper(), id);
         try (Connection connection = this.connection) {
             PreparedStatement ps = connection.prepareStatement(SELECT_ACCOUNT_BY_ID);
+            System.out.println(ps);
             ps.setInt(1, id);
             System.out.println(ps);
             ResultSet rs = ps.executeQuery();
@@ -104,6 +106,7 @@ public class AccountDAO extends AbstractDAO<Account> implements IAccountDAO {
         boolean check = false;
         try {
             PreparedStatement preparedStatement = this.connection.prepareStatement(DELETE_ACCOUNTS_SQL);
+            System.out.println(preparedStatement);
             preparedStatement.setInt(1, idAccount);
             check = (preparedStatement.executeUpdate() > 0);
         } catch (SQLException exception) {
@@ -117,6 +120,7 @@ public class AccountDAO extends AbstractDAO<Account> implements IAccountDAO {
         boolean check = false;
         try {
             PreparedStatement preparedStatement = this.connection.prepareStatement(UPDATE_ACCOUNTS_SQL);
+            System.out.println(preparedStatement);
             preparedStatement.setString(1, account.getUsername());
             preparedStatement.setString(2, account.getPassword());
             preparedStatement.setDate(3, (Date) account.getSignUpDate());
@@ -138,6 +142,7 @@ public class AccountDAO extends AbstractDAO<Account> implements IAccountDAO {
         //   List<Account> accounts= query(sql.toString(),new AccountMapper(),username,password,status);
         List<Account> accounts = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_ACCOUNT_BY_USERNAME_AND_PASSWORD);){
+            System.out.println(preparedStatement);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
             preparedStatement.setBoolean(3, status);

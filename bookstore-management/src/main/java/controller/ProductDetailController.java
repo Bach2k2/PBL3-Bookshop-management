@@ -99,8 +99,8 @@ public class ProductDetailController extends HttpServlet {
     protected void showProductDetail(HttpServletRequest request, HttpServletResponse response, ProductShow ps) throws ServletException, IOException
     {
         List<ProductShow> listProductShow = productDAO.convertProduct(productDAO.selectAllProduct());
-        List<ProductShow> listPSsameCategory = productDAO.GetBookWithSameCategory(ps);
-        List<ProductShow> listPSsameAuthor = productDAO.GetBookWithSameAuthor(ps);
+        List<ProductShow> listPSsameCategory = productDAO.getBookWithSameCategory(ps);
+        List<ProductShow> listPSsameAuthor = productDAO.getBookWithSameAuthor(ps);
         request.setAttribute("listPSsameCategory" , listPSsameCategory);
         request.setAttribute("listPSsameAuthor" , listPSsameAuthor);
         request.setAttribute("listProductShow", listProductShow);

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c' %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +17,7 @@
     <!-- bootstrap css -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <!-- style css -->
+    <link href="<%=request.getContextPath()%>/css/css1/style.css" rel='stylesheet' type='text/css'/>
     <link rel="stylesheet" href="../css/style.css">
     <!-- Responsive-->
     <link rel="stylesheet" href="../css/responsive.css">
@@ -27,6 +29,10 @@
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css1/icon-font.min.css" type='text/css'/>
 </head>
 <!-- body -->
 <body class="main-layout home_page">
@@ -44,7 +50,7 @@
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
                     <div class="full">
                         <div class="center-desk">
-                            <div class="logo"><a href="index.html"><img src="../images/logo.png" alt="#"></a></div>
+                            <div class="logo"><a href="/home"><img src="../images/logo.png" alt="#"></a></div>
                         </div>
                     </div>
                 </div>
@@ -54,17 +60,33 @@
                             <nav class="main-menu">
                                 <ul class="menu-area-main">
                                     <li class="active"><a href="/home">Home</a></li>
-                                    <%--                  <li> <a href="about.html">About us</a> </li>--%>
                                     <li><a href="/product">Our Books</a></li>
-                                    <li><a href="/home?action=library">library</a></li>
+                                    <li><a href="/admin">Management</a></li>
                                     <li><a href="/home?action=contact">Contact us</a></li>
+                                    <li><a href="/home?action=register">Sign up</a></li>
+                                    <c:if test="${sessionScope.account==null}">
+                                        <li><a href="/home?action=login">Sign in</a></li>
+                                    </c:if>
+                                    <c:if test="${sessionScope.account!=null}">
+                                        <li>
+                                            <div class="dropdown">
+                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                   id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                                   aria-expanded="false">
+                                                    Xin chào <span>${username}</span>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <a href="#"><i class="fa fa-cog"></i> Setting</a>
+                                                    <a href=""><i class="fa fa-user"></i>Information</a>
+                                                    <a href="/home?action=logout"><i
+                                                            class="fa fa-sign-out"></i> Sign out</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </c:if>
                                     <li class="mean-last"><a href="#"><img src="../images/search_icon.png" alt="#"/></a>
                                     </li>
-                                    <%--             <li class="mean-last"> <a href="#"><img src="images/top-icon.png" alt="#" /></a> </li>--%>
-                                    <li><a href="/home?action=register">Sign up</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/home?action=login">Sign in</a></li>
                                 </ul>
-                                s
                             </nav>
                         </div>
                     </div>
@@ -328,5 +350,22 @@
 <!-- sidebar -->
 <script src="../js/jquery.mCustomScrollbar.concat.min.js"></script>
 <script src="../js/custom.js"></script>
+<script>
+    var toggle = true;
+
+    $(".sidebar-icon").click(function () {
+        if (toggle) {
+            $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+            $("#menu span").css({"position": "absolute"});
+        } else {
+            $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+            setTimeout(function () {
+                $("#menu span").css({"position": "relative"});
+            }, 400);
+        }
+
+        toggle = !toggle;
+    });
+</script>
 </body>
 </html>

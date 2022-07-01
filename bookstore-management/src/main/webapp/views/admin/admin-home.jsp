@@ -1,5 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
-
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
     <title>dashboard</title>
@@ -8,26 +7,48 @@
     <meta name="keywords" content="laptop" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- Bootstrap Core CSS -->
-    <link href="${pageContext.request.contextPath}/css/css1/bootstrap.min.css" rel='stylesheet' type='text/css' />
+<%--    <link href="<%=request.getContextPath()%>/css/css1/bootstrap.min.css" rel='stylesheet' type='text/css' />--%>
+<%--    <!-- Custom CSS -->--%>
+<%--&lt;%&ndash;    <c:url value="css/css1/style.css"/>&ndash;%&gt;--%>
+<%--    <link href='<%=request.getContextPath()%>/css/css1/style.css' rel='stylesheet' type='text/css' />--%>
+<%--    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css1/morris.css" type="text/css"/>--%>
+<%--    <!-- Graph CSS -->--%>
+
+<%--    <!-- jQuery -->--%>
+<%--   <script src="<%=request.getContextPath()%>/js/js1/jquery-2.1.4.min.js"></script>--%>
+<%--    <!-- //jQuery -->--%>
+<%--    <!-- <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>--%>
+<%--    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> -->--%>
+<%--    <!-- lined-icons -->--%>
+<%--&lt;%&ndash;    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css1/icon-font.min.css" type='text/css' />&ndash;%&gt;--%>
+
+<%--    <!-- tables -->--%>
+<%--    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/css1/table-style.css" />--%>
+<%--    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/css1/basictable.css" />--%>
+<%--    <script type="text/javascript" src="<%=request.getContextPath()%>/js/js1/jquery.basictable.min.js"></script>--%>
+    <link href="<%=request.getContextPath()%>/css/css1/bootstrap.min.css" rel='stylesheet' type='text/css'/>
     <!-- Custom CSS -->
-<%--    <c:url value="css/css1/style.css"/>--%>
-    <link href='${pageContext.request.contextPath}/css/css1/style.css' rel='stylesheet' type='text/css' />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/css1/morris.css" type="text/css"/>
+    <link href="<%=request.getContextPath()%>/css/css1/style.css" rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css1/morris.css" type="text/css"/>
     <!-- Graph CSS -->
-<%--    <link href="<%=request.getContextPath()%>/css/css1/font-awesome.css" rel="stylesheet">--%>
-<%--    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />--%>
+    <%--    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css"--%>
+    <%--          rel="stylesheet">--%>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <!-- jQuery -->
     <script src="<%=request.getContextPath()%>/js/js1/jquery-2.1.4.min.js"></script>
     <!-- //jQuery -->
     <!-- <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
     <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> -->
     <!-- lined-icons -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/css1/icon-font.min.css" type='text/css' />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css1/icon-font.min.css" type='text/css'/>
 
     <!-- tables -->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/css1/table-style.css" />
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/css1/basictable.css" />
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/js1/jquery.basictable.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/css1/table-style.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/css1/basictable.css"/>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/js1/jquery.basictable.min.js"></script>
+    <%--Font awesome--%>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/font-awesome-4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
 <div class="page-container">
@@ -55,7 +76,7 @@
                             <ul class="dropdown-menu drp-mnu">
                                 <li> <a href="#"><i class="fa fa-cog"></i> Cài đặt</a> </li>
                                 <li> <a href="#"><i class="fa fa-user"></i> Thông tin</a> </li>
-                                <li> <a href="#"><i class="fa fa-sign-out"></i> Đăng xuất</a> </li>
+                                <li> <a href="/home?action=logout"><i class="fa fa-sign-out"></i> Đăng xuất</a> </li>
                             </ul>
                         </li>
                     </ul>
@@ -65,13 +86,11 @@
             </div>
             <!--heder end here-->
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/home?action=admin">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
+                <li class="breadcrumb-item"><a href="/admin">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
             </ol>
 
             <!-- grids -->
             <div class="grids">
-
-
 
                 <div class="agile-calendar-grid">
                     <div class="page">
@@ -91,9 +110,9 @@
                                                 <div class="list-group">
                                                     <a href="/admin" class="list-group-item active">Trang chủ</a>
                                                     <a href="/admin?action=product-management" class="list-group-item">Quản lý Sách</a>
-                                                    <a href="/admin?action=category" class="list-group-item">Quản lý thể loại</a>
-                                                    <a href="/admin?action=author" class="list-group-item">Quản lý tác giả</a>
-                                                    <a href="" class="list-group-item">Quản lý đơn hàng</a>
+                                                    <a href="/admin?action=category-management" class="list-group-item">Quản lý thể loại</a>
+                                                    <a href="/admin?action=author-management" class="list-group-item">Quản lý tác giả</a>
+                                                    <a href="#" class="list-group-item">Quản lý đơn hàng</a>
                                                     <a href="/customer" class="list-group-item">Quản lý khách hàng</a>
                                                 </div>
                                             </div>
@@ -148,7 +167,7 @@
             <!--inner block end here-->
             <!--copy rights start here-->
             <div class="copyrights">
-                <p>© 2018 N5QPT. All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
+                <p>© 2022 NBH Team. All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
             </div>
             <!--COPY rights end here-->
         </div>
@@ -162,7 +181,7 @@
         <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
         <div class="menu">
             <ul id="menu" >
-                <li><a href="index1.html"><i class="fa fa-tachometer"></i> <span>Trang chủ</span><div class="clearfix"></div></a></li>
+                <li><a href="/home"><i class="fa fa-tachometer"></i> <span>Trang chủ</span><div class="clearfix"></div></a></li>
 
 
                 <li id="menu-academico" ><a href="donhang.html"><i class="fa fa-envelope nav_icon"></i><span>Đơn hàng</span><div class="clearfix"></div></a></li>
@@ -213,13 +232,14 @@
         toggle = !toggle;
     });
 </script>
+
 <!--js -->
-<script src="${pageContext.request.contextPath}/js/js1/jquery.nicescroll.js"></script>
-<script src="${pageContext.request.contextPath}/js/js1/scripts.js"></script>
-<!-- Bootstrap Core JavaScript -->
-<script src="${pageContext.request.contextPath}/js/js1/bootstrap.min.js"></script>
-<!-- /Bootstrap Core JavaScript -->
-<!-- morris JavaScript -->
-<script src="${pageContext.request.contextPath}/js/js1/raphael-min.js"></script>
+<%--<script src="<%=request.getContextPath()%>/js/js1/jquery.nicescroll.js"></script>--%>
+<%--<script src="<%=request.getContextPath()%>/js/js1/scripts.js"></script>--%>
+<%--<!-- Bootstrap Core JavaScript -->--%>
+<script src="<%=request.getContextPath()%>/js/js1/bootstrap.min.js"></script>
+<%--<!-- /Bootstrap Core JavaScript -->--%>
+<%--<!-- morris JavaScript -->--%>
+<%--<script src="<%=request.getContextPath()%>/js/js1/raphael-min.js"></script>--%>
 
 </body>

@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO extends AbstractDAO<Customer> implements ICustomerDAO {
-    private static final String INSERT_CUSTOMERS_SQL = "INSERT INTO customer" + "(first_name,last_name,gender,date_of_birth,phone,email,address,username)" +
+    private static final String INSERT_CUSTOMERS_SQL = "INSERT INTO customer" + "(firstname,lastname,gender,date_of_birth,email,phone,address,id_account)" +
             " VALUES" + "(?,?,?,?,?,?,?,?)";
-    private static final String SELECT_ALL_CUSTOMERS = "SELECT id_customer, first_name,last_name,gender,date_of_birth,phone,email,address,pin_code,username FROM customer";
-    private static final String SELECT_CUSTOMERS_BY_ID = "SELECT first_name,last_name,gender,date_of_birth,phone,email,address,pin_code FROM customer where id_customer=?";
+    private static final String SELECT_ALL_CUSTOMERS = "SELECT id_customer, firstname,lastname,gender,date_of_birth,email,phone,address,id_account FROM customer";
+    private static final String SELECT_CUSTOMERS_BY_ID = "SELECT firstname,lastname,gender,date_of_birth,email,phone,address, FROM customer where id_customer=?";
     private static final String DELETE_CUSTOMERS_SQL = "DELETE FROM customer where id_customer=?";
-    private static final String UPDATE_CUSTOMERS_SQL = "UPDATE customer SET first_name=?,last_name=?,gender=?,date_of_birth=?,phone=?,email=?,address=?,pin_code=? where id_customer=?";
+    private static final String UPDATE_CUSTOMERS_SQL = "UPDATE customer SET firstname=?,lastname=?,gender=?,date_of_birth=?,email=?,phone=?,address=?,id_account=? where id_customer=?";
 
     private Connection connection = null;
     private DBRepository dbRepository = new DBRepository();
@@ -26,19 +26,20 @@ public class CustomerDAO extends AbstractDAO<Customer> implements ICustomerDAO {
 
     @Override
     public boolean insertCustomer(Customer customer) {
-       // query(INSERT_CUSTOMERS_SQL, new CustomerMapper(), customer);
-        boolean check=false;
+        // query(INSERT_CUSTOMERS_SQL, new CustomerMapper(), customer);
+        boolean check = false;
         try {
             PreparedStatement ps = this.connection.prepareStatement(INSERT_CUSTOMERS_SQL);
+            System.out.println(ps);
             ps.setString(1, customer.getFirstName());
             ps.setString(2, customer.getLastName());
             ps.setBoolean(3, customer.isGender());
             ps.setDate(4, new Date(customer.getDateOfBirth().getTime()));
-            ps.setString(5,  customer.getPhone());
-            ps.setString(6, customer.getAddress());
-            ps.setString(7, customer.getEmail());
-            ps.setString(8, customer.getUsername());
-            check= ps.executeUpdate()>0;
+            ps.setString(5, customer.getEmail());
+            ps.setString(6, customer.getPhone());
+            ps.setString(7, customer.getAddress());
+            ps.setInt(8, customer.getIdAccount());
+            check = ps.executeUpdate() > 0;
             this.connection.close();
         } catch (SQLException e) {
             printSQLException(e);
@@ -54,22 +55,21 @@ public class CustomerDAO extends AbstractDAO<Customer> implements ICustomerDAO {
     @Override
     public List<Customer> findAllCustomer() {
         List<Customer> customerList = new ArrayList<>();
-//        return query(SELECT_ALL_CUSTOMERS, new CustomerMapper());
         try (PreparedStatement ps = this.connection.prepareStatement(SELECT_ALL_CUSTOMERS);) {
             System.out.println(ps);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Customer customer = null;
                 int id = rs.getInt("id_customer");
-                String firstName = rs.getString("first_name");
-                String lastName = rs.getString("last_name");
+                String firstName = rs.getString("firstname");
+                String lastName = rs.getString("lastname");
                 Boolean gender = rs.getBoolean("gender");
+                Date dateOfBirth=rs.getDate("date_of_birth");
                 String email = rs.getString("email");
                 String phone = rs.getString("phone");
                 String address = rs.getString("address");
-                String username = rs.getString("username");
-                Date dateOfBirth = rs.getDate("date_of_birth");
-                customer = new Customer(id, gender, firstName, lastName, dateOfBirth, email, phone, address,username);
+                int idAccount = rs.getInt("id_account");
+                customer = new Customer(id, firstName, lastName, gender,dateOfBirth, email, phone, address, idAccount);
                 customerList.add(customer);
             }
 
@@ -89,15 +89,15 @@ public class CustomerDAO extends AbstractDAO<Customer> implements ICustomerDAO {
         Boolean check = false;
         try {
             PreparedStatement preparedStatement = getConnection().prepareStatement(UPDATE_CUSTOMERS_SQL);
+            System.out.println(preparedStatement);
             preparedStatement.setString(1, customer.getFirstName());
             preparedStatement.setString(2, customer.getLastName());
             preparedStatement.setBoolean(3, customer.isGender());
-            preparedStatement.setDate(4, (Date) customer.getDateOfBirth());
-            preparedStatement.setString(5, customer.getEmail());
-            preparedStatement.setString(6, customer.getPhone());
-            preparedStatement.setString(7, customer.getAddress());
-            preparedStatement.setString(8, customer.getPincode());
-            preparedStatement.setInt(9, customer.getIdCustomer());
+            preparedStatement.setString(4, customer.getEmail());
+            preparedStatement.setString(5, customer.getPhone());
+            preparedStatement.setString(6, customer.getAddress());
+            preparedStatement.setInt(7, customer.getIdAccount());
+            preparedStatement.setInt(8, customer.getIdCustomer());
 
             check = (preparedStatement.executeUpdate() > 0);
         } catch (SQLException exception) {

@@ -12,9 +12,7 @@ import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,7 +20,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Locale;
 
-@WebServlet(name = "HomeServlet", urlPatterns = {"/", "/home", "/login", "/logout"})
+@WebServlet(name = "HomeServlet", urlPatterns = {"/", "/home"})
 public class HomeController extends HttpServlet {
 
     //    @Inject
@@ -58,20 +56,24 @@ public class HomeController extends HttpServlet {
                 response.sendRedirect("views/account/register.jsp");
                 break;
             case "login":
-                response.sendRedirect("views/account/login.jsp");
+            {
+
+                {
+                    Cookie arrC[]=request.getCookies();
+                    for(Cookie c:arrC)
+                    {
+                        if(c.getName().equals("user")) request.setAttribute("username",c.getValue());
+                        if(c.getName().equals("pass")) request.setAttribute("password",c.getValue());
+                    }
+                }
+                request.getRequestDispatcher("views/account/login.jsp").forward(request,response);
                 break;
+            }
             case "logout":
-                SessionUtil.getInstance().removeValue(request, "ACCOUNT");
-                response.sendRedirect(request.getContextPath() + "/home");
+                logoutUser(request,response);
                 break;
             case "product":
                 response.sendRedirect("views/product/product-list.jsp");
-                break;
-            case "header":
-                response.sendRedirect(request.getContextPath() + "/template/header.jsp");
-                break;
-            case "footer":
-                response.sendRedirect(request.getContextPath() + "/template/footer.jsp");
                 break;
             default:
                 showHomePage(request, response);
@@ -84,32 +86,49 @@ public class HomeController extends HttpServlet {
     }
 
     public void loginUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+            request.setAttribute("message", null);
+            Account model = null;
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            model = accountService.findByUsernameAndPasswordAndStatus(username, password, true);
+            if (model != null) {
+                accountService.setRole(model, model.getIdRole());
+                HttpSession session = request.getSession();
+                session.setAttribute("account", model);
+                session.setMaxInactiveInterval(3 * 60 * 60);
+                request.setAttribute("check", true);
+                request.setAttribute("username", model.getUsername());
 
-        Account model = null;
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        model = accountService.findByUsernameAndPasswordAndStatus(username, password, true);
-        if (model != null) {
-            accountService.setRole(model, model.getIdRole());
-            SessionUtil.getInstance().putValue(request, "ACCOUNT", model);
-            request.setAttribute("check",true);
-      //      request.getRequestDispatcher(request.getContextPath() + "/view/account/login.jsp").forward(request, response);
-         //   response.sendRedirect(request.getContextPath()+"/view/account/login.jsp");
-            if (model.getRole().getCode().equals("CUSTOMER")) {
-                System.out.println("Vào trang customer");
-                response.sendRedirect("views/customer/customer.jsp");
-            } else if (model.getRole().getCode().equals("ADMIN")) {  //Loi Form Util
-                System.out.println("Vào trang admin");
-                 //response.sendRedirect(request.getContextPath());
-               request.getRequestDispatcher(request.getContextPath() + "views/admin/admin-home.jsp").forward(request, response);
+                Cookie u=new Cookie("user",username);
+                Cookie p=new Cookie("pass",password);
+                u.setMaxAge(60);
+                p.setMaxAge(60);
+                response.addCookie(u);// luu u va p len tren edge;
+                response.addCookie(p);
+
+                //      request.getRequestDispatcher(request.getContextPath() + "/view/account/login.jsp").forward(request, response);
+                //   response.sendRedirect(request.getContextPath()+"/view/account/login.jsp");
+                if (model.getRole().getCode().equals("CUSTOMER")) {
+                    System.out.println("Vào trang customer");
+//                response.sendRedirect("");
+                } else if (model.getRole().getCode().equals("ADMIN")) {  //Loi Form Util
+                    System.out.println("Vào trang admin");
+                    //response.sendRedirect(request.getContextPath());
+//                request.getRequestDispatcher(request.getContextPath() + "views/admin/admin-home.jsp").forward(request, response);
+                }
+                showHomePage(request,response);
+            } else {
+                request.setAttribute("message", "Đăng nhập thất bại. username hoặc password không đúng");
+                request.setAttribute("check", false);
+                System.out.println("Đăng nhập thất bại");
+                request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
             }
-
-        } else {
-            request.setAttribute("message", "Đăng nhập thất bại. username hoặc password không đúng");
-            request.setAttribute("check",false);
-            System.out.println("Đăng nhập thất bại");
-            response.sendRedirect(request.getContextPath()+"/home?action=login");
+        }catch (NullPointerException e)
+        {
+            e.printStackTrace();
         }
+
     }
 
     public void registerForCustomer(HttpServletRequest request, HttpServletResponse response)
@@ -119,8 +138,7 @@ public class HomeController extends HttpServlet {
             Customer cus = null;
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
-            String birthday1 = request.getParameter("birthday");
-            Date birthday = new SimpleDateFormat("yyyy-MM-dd").parse(birthday1);
+            Date dateOfBirth = new SimpleDateFormat("dd-MM-yyyy").parse(request.getParameter("birthday"));
             String gender1 = request.getParameter("gender");
             Boolean gender;
             if (gender1.equals("true")) gender = true;
@@ -131,13 +149,13 @@ public class HomeController extends HttpServlet {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             System.out.println("Username: " + username);
-            cus = new Customer(gender, firstName, lastName, birthday, email, phone, address, username);
 
             Account account = null;
-
             Date signUpDate = new SimpleDateFormat("yyyy-MM-dd").parse(String.valueOf(LocalDateTime.now()));
             LocalDateTime lastLogin = LocalDateTime.now();
             account = new Account(username, password, signUpDate, lastLogin, true, 2);
+
+            cus = new Customer(firstName, lastName, gender, dateOfBirth, email, phone, address, account.getIdAccount());
 
             accountService.save(account);
             customerService.save(cus);
@@ -146,4 +164,12 @@ public class HomeController extends HttpServlet {
             e.printStackTrace();
         }
     }
+    public void logoutUser(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session=request.getSession();
+        session.removeAttribute("account");
+        response.sendRedirect(request.getContextPath() + "/home");
+    }
+
 }

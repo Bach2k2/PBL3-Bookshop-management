@@ -4,34 +4,33 @@ import java.sql.Date;
 
 public class Product {
     private int idProduct;
+    private String bookTitle;//6
+    private String productDescription;//5
+    private String publisher;//7
+    private Date publishDate;//8
     private int quantity;
     private double price;
     private double averageRating;//4
   //  private int inventory;
-    private String bookTitle;//6
-    private String publisher;//7
-    private String productDescription;//5
-    private Date publishDate;//8
 //    private String itemName;
 //    private String itemBrand;
-
     private int idAuthor;
     private int idCategory;
 
     public Product() {
     }
 
-    public Product(int idProduct, int quantity, double price, double averageRating, String bookTitle, String publisher, String productDescription, Date publishDate, int idAuthor, int categoryId) {
+    public Product(int idProduct, String bookTitle, String productDescription, String publisher, Date publishDate, int quantity, double price, double averageRating, int idAuthor, int idCategory) {
         this.idProduct = idProduct;
+        this.bookTitle = bookTitle;
+        this.productDescription = productDescription;
+        this.publisher = publisher;
+        this.publishDate = publishDate;
         this.quantity = quantity;
         this.price = price;
         this.averageRating = averageRating;
-        this.bookTitle = bookTitle;
-        this.publisher = publisher;
-        this.productDescription = productDescription;
-        this.publishDate = publishDate;
         this.idAuthor = idAuthor;
-        this.idCategory = categoryId;
+        this.idCategory = idCategory;
     }
 
     public int getIdProduct() {

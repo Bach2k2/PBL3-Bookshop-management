@@ -11,12 +11,12 @@
 </head>
 <body>
 <div id="login">
+    <div class="container">
     <c:if test="${message!=null}">
-        <div class="alert alert-warning" id="error">
-                ${message}
+        <div class="alert alert-warning" role="alert">
+            ${message}
         </div>
     </c:if>
-    <div class="container">
         <div id="login-row" class="row justify-content-center align-items-center">
             <div id="login-column" class="col-md-6">
                 <div id="login-box" class="col-md-12">
@@ -24,14 +24,14 @@
                         <h3 class="text-center text-info">Login</h3>
                         <div class="form-group">
                             <label for="username" class="text-info">Tên đăng nhập</label><br>
-                            <input type="text" name="username" id="username" class="form-control">
+                            <input type="text" value="${username}" name="username" id="username" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="password" class="text-info">Mật khẩu:</label><br>
-                            <input type="password" name="password" id="password" class="form-control">
+                            <input type="password" value="${password}" name="password" id="password" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
+                            <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" value="on" type="checkbox"></span></label><br>
 <%--                            Button Đăng nhập--%>
                             <input type="hidden" id="action" name="action" value="login">
                             <input onclick="showLoginAlert(true)" type="submit" name="submit" id="login-button" class="btn btn-info btn-md" value="Đăng nhập">

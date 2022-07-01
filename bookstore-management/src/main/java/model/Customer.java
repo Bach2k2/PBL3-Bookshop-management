@@ -4,41 +4,40 @@ import java.util.Date;
 
 public class Customer {
     private int idCustomer;
-    private boolean gender;
     private String firstName;
     private String lastName;
+    private boolean gender;
     private Date dateOfBirth;
     private String email;
     private String phone;
     private String address;
-    private String username;
     private String pincode;
+    private int idAccount;
 
     public Customer() {
     }
 
-
-    public Customer(boolean gender, String firstName, String lastName, Date dateOfBirth, String email, String phone, String address, String username) {
-        this.gender = gender;
+    public Customer(int idCustomer, String firstName, String lastName, boolean gender, Date dateOfBirth, String email, String phone, String address, int idAccount) {
+        this.idCustomer = idCustomer;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.phone = phone;
         this.address = address;
-        this.username = username;
+        this.idAccount = idAccount;
     }
 
-    public Customer(int idCustomer, boolean gender, String firstName, String lastName, Date dateOfBirth, String email, String phone, String address, String username) {
-        this.idCustomer = idCustomer;
-        this.gender = gender;
+    public Customer(String firstName, String lastName, boolean gender, Date dateOfBirth, String email, String phone, String address, int idAccount) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.phone = phone;
         this.address = address;
-        this.username = username;
+        this.idAccount = idAccount;
     }
 
     public int getIdCustomer() {
@@ -113,11 +112,11 @@ public class Customer {
         this.pincode = pincode;
     }
 
-    public String getUsername() {
-        return username;
+    public int getIdAccount() {
+        return idAccount;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setIdAccount(int idAccount) {
+        this.idAccount = idAccount;
     }
 }

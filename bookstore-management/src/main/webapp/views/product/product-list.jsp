@@ -1,6 +1,6 @@
 <%--Danh sách các sản phẩm--%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
-         pageEncoding="UTF-8" %>
+         pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <head>
     <meta charset="utf-8">
@@ -64,12 +64,12 @@
                     <c:if test="${User == null}">
                         <li><a href="/home?action=register">Tài khoản</a></li>
                     </c:if>
-                    <li><a href="cart.html">Giỏ hàng</a></li>
-                    <li><a href="checkout.html">Thanh toán</a></li>
-                    <c:if test="${User == null}">
+                    <li><a href="/product?action=myCart">Giỏ hàng</a></li>
+                    <li><a href="product?action=paying">Thanh toán</a></li>
+                    <c:if test="${sessionScope.account == null}">
                         <li><a href="/home?action=login">Đăng nhập</a></li>
                     </c:if>
-                    <c:if test="${User != null}">
+                    <c:if test="${sessionScope.account != null}">
                         <li><a href="#">gọi hàm User.getName()</a></li>
                     </c:if>
                 </ul>
