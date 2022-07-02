@@ -2,7 +2,9 @@ package controller;
 
 import dao.impl.ProductDAO;
 import model.Category;
+import model.OrderDetail;
 import model.ProductShow;
+import model.Rating;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -27,16 +29,20 @@ public class ProductDetailController extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = 0;
-        id = Integer.parseInt(request.getParameter("idProduct"));
+        int ID_Product = 0;
+        int ID_User = Integer.parseInt(request.getParameter("ID_U"));
+        request.setAttribute("ID_U", ID_User);
+        ID_Product = Integer.parseInt(request.getParameter("ID_Product"));
+        request.setAttribute("ID_Product", ID_Product);
+        request.setAttribute("listRating", productDAO.selectRatingByIDProduct(ID_Product));
         String action = request.getParameter("action");
         if(action == null) action = "";
         ProductShow ps = null;
-        ps = productDAO.convertProduct(productDAO.selectProductByID(id));
+        ps = productDAO.convertProduct(productDAO.selectProductByID(ID_Product));
         if(ps == null) System.out.print("aaaaaaaa"); else System.out.print("bbbbbb");
         try {
             switch (action) {
@@ -60,9 +66,9 @@ public class ProductDetailController extends HttpServlet {
                     //searchprice(request,response);
                     break;
                 }
-                case "searchbook":
+                case "addrating":
                 {
-                    //searchbook(request,response);
+                    addrating(request,response,ID_User, ID_Product,ps);
                     break;
                 }
                 case "searchname":
@@ -70,9 +76,9 @@ public class ProductDetailController extends HttpServlet {
                     searchName(request,response);
                     break;
                 }
-                case "detail":
+                case "addcart":
                 {
-                    showDetailForm(request,response);
+                    addcart(request,response,ps);
                     break;
                 }
                 default:
@@ -96,6 +102,7 @@ public class ProductDetailController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("views/product/product-detail.jsp");
         dispatcher.forward(request, response);
     }
+
     protected void showProductDetail(HttpServletRequest request, HttpServletResponse response, ProductShow ps) throws ServletException, IOException
     {
         List<ProductShow> listProductShow = productDAO.convertProduct(productDAO.selectAllProduct());
@@ -111,8 +118,34 @@ public class ProductDetailController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("views/product/product-detail.jsp");
         dispatcher.forward(request, response);
     }
-    public void showDetailForm(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
-    {
 
+    private void addrating(HttpServletRequest request, HttpServletResponse response,int ID_User, int ID_Product,ProductShow ps)
+            throws SQLException, IOException, ServletException
+    {
+        int rating_star = Integer.parseInt(request.getParameter("star"));
+        String review_text = request.getParameter("review_text");
+        Rating r = new Rating(ID_User,ID_Product,rating_star,review_text);
+        productDAO.insertRating(r);
+        productDAO.updateAverageRating(ID_Product);
+        showProductDetail(request, response, ps);
+    }
+    private void addcart(HttpServletRequest request, HttpServletResponse response,ProductShow ps)
+            throws SQLException, IOException, ServletException
+    {
+        int ID_Product = ps.getIdProduct();
+        int ID_Order = 0;
+        int ID_Cart = Integer.parseInt(request.getParameter("ID_U"));
+        int quantity;
+        if(request.getParameter("SL") != null)
+        {
+            quantity = Integer.parseInt(request.getParameter("SL"));
+        }
+        else quantity = 1;
+        double price = ps.getPrice();
+        double discountprice = 0;
+        boolean status = false;
+        OrderDetail or = new OrderDetail(ID_Product,ID_Order,ID_Cart,quantity,price,discountprice,status);
+        productDAO.UpdateInsertOrderDetail(or);
+        response.sendRedirect("./productDetail?ID_Product=" + ID_Product + "&ID_U="+ID_Cart);
     }
 }

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <!-- site metas -->
-    <title>memorial books</title>
+    <title>NBH memorial bookstore</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -73,7 +73,7 @@
                                                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
                                                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
                                                    aria-expanded="false">
-                                                    Xin chào <span>${username}</span>
+                                                    Hi <span>${sessionScope.account.username}</span>
                                                 </a>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                     <a href="#"><i class="fa fa-cog"></i> Setting</a>
@@ -259,7 +259,7 @@
                 </div>
             </div>
             <div class="col-md-6 offset-md-3">
-                <p>magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris</p>
+                <p>Tận hưởng niềm vui qua những cuốn sách</p>
             </div>
         </div>
         <div class="container">
@@ -336,7 +336,7 @@
     </div>
     <div class="copyright">
         <div class="container">
-            <p>Copyright 2019 All Right Reserved By <a href="https://html.design/">Free html Templates</a></p>
+            <p>@Copyright 2022</p>
         </div>
     </div>
 </footer>

@@ -4,6 +4,7 @@ import dao.impl.ProductDAO;
 import model.*;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,12 +20,14 @@ public class CartController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ProductDAO productDAO;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    public void init(ServletConfig config) throws ServletException
+    {
+        // TODO Auto-generated method stub
+        productDAO = new ProductDAO();
+    }
+
     public CartController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -100,6 +103,7 @@ public class CartController extends HttpServlet {
     {
         int ID_Cart = Integer.parseInt(request.getParameter("ID_U"));
         request.setAttribute("ID_U", ID_Cart);
+        System.out.println("ID_Cart: "+ ID_Cart);
         List<OrderDetail> ors = productDAO.getOrderDetailForCart(ID_Cart);
         List<OrderDetailShow> orss = productDAO.convertFromOrderDetail(ors);
         request.setAttribute("listOrderdetailShow", orss);

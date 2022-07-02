@@ -1,6 +1,5 @@
 package dao.impl;
 
-import mapper.CustomerMapper;
 import model.Customer;
 import dao.DBRepository;
 import dao.ICustomerDAO;
@@ -9,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerDAO extends AbstractDAO<Customer> implements ICustomerDAO {
+public class CustomerDAO implements ICustomerDAO {
     private static final String INSERT_CUSTOMERS_SQL = "INSERT INTO customer" + "(firstname,lastname,gender,date_of_birth,email,phone,address,id_account)" +
             " VALUES" + "(?,?,?,?,?,?,?,?)";
     private static final String SELECT_ALL_CUSTOMERS = "SELECT id_customer, firstname,lastname,gender,date_of_birth,email,phone,address,id_account FROM customer";
@@ -134,7 +133,7 @@ public class CustomerDAO extends AbstractDAO<Customer> implements ICustomerDAO {
     public boolean updateAccount(Customer customer) {
         Boolean check = false;
         try {
-            PreparedStatement preparedStatement = getConnection().prepareStatement(UPDATE_CUSTOMERS_SQL);
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CUSTOMERS_SQL);
             System.out.println(preparedStatement);
             preparedStatement.setString(1, customer.getFirstName());
             preparedStatement.setString(2, customer.getLastName());

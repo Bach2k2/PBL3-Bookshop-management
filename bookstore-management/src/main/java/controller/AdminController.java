@@ -6,7 +6,6 @@ import model.Account;
 import model.Author;
 import model.Category;
 import model.Product;
-import sun.java2d.pipe.SpanShapeRenderer;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -53,7 +52,7 @@ public class AdminController extends HttpServlet {
                     break;
                 }
                 case "create-category": {
-                   createCategory(request,response);
+                    createCategory(request, response);
                     break;
                 }
                 case "edit-category": {
@@ -182,6 +181,7 @@ public class AdminController extends HttpServlet {
     public void editProduct(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException, SQLException {
         try {
+            response.setContentType("text/html;charset=UTF-8");
             int id = Integer.parseInt(request.getParameter("idProductEdit"));
             Product optProduct = productDAO.selectProductByID(id);
             optProduct.setBookTitle(request.getParameter("bookTitle2"));
@@ -311,7 +311,7 @@ public class AdminController extends HttpServlet {
 
     public void editAuthor(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException, SQLException {
-        try{
+        try {
             int id = Integer.parseInt(request.getParameter("idAuthorEdit"));
             Author author = productDAO.selectAuthor(id);
             author.setAuthorName(request.getParameter("categoryName2"));
@@ -320,8 +320,7 @@ public class AdminController extends HttpServlet {
             productDAO.updateAuthor(author);
             System.out.println("Cap nhat thanh cong");
             response.sendRedirect("/admin?action=author-management");
-        }catch (ParseException e)
-        {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 

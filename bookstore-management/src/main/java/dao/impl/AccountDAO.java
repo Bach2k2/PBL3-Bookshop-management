@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountDAO extends AbstractDAO<Account> implements IAccountDAO {
+public class AccountDAO implements IAccountDAO {
     private static final String INSERT_ACCOUNTS_SQL = "INSERT INTO ACCOUNT" + "(username,password,signup_date,last_login,status,id_role) VALUES" + "(?,?,?,?,?,?)";
     // fix id_staff
     private static final String SELECT_ALL_ACCOUNT = "SELECT id_account,username,password,signup_date,last_login,status,id_role FROM ACCOUNT";

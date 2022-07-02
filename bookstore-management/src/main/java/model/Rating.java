@@ -10,6 +10,12 @@ public class Rating {
     public Rating() {
     }
 
+    public Rating(int idCustomer, int idProduct, int ratingStar, String reviewText) {
+        this.idCustomer = idCustomer;
+        this.idProduct = idProduct;
+        this.ratingStar = ratingStar;
+        this.reviewText = reviewText;
+    }
 
     public Rating(int idRating, int idCustomer, int idProduct, int ratingStar, String reviewText) {
         this.idRating = idRating;

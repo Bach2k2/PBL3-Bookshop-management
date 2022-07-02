@@ -1,11 +1,10 @@
 package dao.impl;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud;
 import model.*;
 import dao.DBRepository;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,18 +30,18 @@ public class ProductDAO {
 
     private static String UPDATE_PRODUCT_QUANTITY_SQL = "update product set quantity = ? where ID_Product = ?;";
 
-    private static String INSERT_OrderDetail_SQL = "Insert INTO OrderDetail "
-            + "(ID_Product,ID_Order,ID_Cart,quantity,price,discountprice,status) VALUES "
+    private static String INSERT_OrderDetail_SQL = "Insert INTO order_detail "
+            + "(id_product,id_order,id_cart,quantity,price,discount_price,status) VALUES "
             + "(?,?,?,?,?,?,?);";
-    private static String SEARCH_OrderDetail_BY_IDCART = "SELECT * FROM OrderDetail where ID_cart = ?";
-    private static String SEARCH_OrderDetail_BY_IDPRODUCT = "SELECT * FROM OrderDetail where ID_Product = ? and ID_Cart = ? and status = ?";
+    private static String SEARCH_OrderDetail_BY_IDCART = "SELECT * FROM order_detail where id_cart = ?";
+    private static String SEARCH_OrderDetail_BY_IDPRODUCT = "SELECT * FROM  order_detail  where id_product = ? and id_cart = ? and status = ?";
 
-    private static String DELETE_OrderDetail_BY_IDPRODUCT = "delete from OrderDetail where ID_Product = ? and ID_Cart = ? and status = ?;";
-    private static String UPDATE_OrderDetail_SQL = "update OrderDetail set status = ? where ID_cart = ? ;";
-    private static String UPDATE_OrderDetail_SQL2 = "update OrderDetail set ID_Order = ? where ID_cart = ? and status = ?;";
-    private static String UPDATE_OrderDetail_SQL3 = "update OrderDetail set quantity = ? where ID_Product = ? and ID_Cart = ? and status = ?;";
-    private static String INSERT_ORDER_SQL = "Insert INTO Orders "
-            + "(ID_Customer,total_price,order_status,order_date,phone_number,delivery_date,order_location) values "
+    private static String DELETE_OrderDetail_BY_IDPRODUCT = "delete from  order_detail  where id_product = ? and id_cart = ? and status = ?;";
+    private static String UPDATE_OrderDetail_SQL = "update order_detail set status = ? where id_cart = ? ;";
+    private static String UPDATE_OrderDetail_SQL2 = "update order_detail set id_order = ? where id_cart = ? and status = ?;";
+    private static String UPDATE_OrderDetail_SQL3 = "update order_detail set quantity = ? where id_product = ? and id_cart = ? and status = ?;";
+    private static String INSERT_ORDER_SQL = "Insert INTO orders "
+            + "(id_customer,total_price,order_status,order_date,phone_number,delivery_date,order_location) values "
             + "(?,?,?,?,?,?,?);";
     private static String SELECT_ORDER_SQL = "SELECT * FROM orders ORDER BY ID_ORDER DESC LIMIT 1";
 
@@ -75,6 +74,10 @@ public class ProductDAO {
     private static String INSERT_RATING_SQL = "Insert INTO rating "
             + "(ID_Customer,ID_Product,rating_star,review_text) values"
             + "(?,?,?,?);";
+
+    private static String SELECT_ALL_ORDER = "SELECT * FROM orders";
+    private static String SELECT_ORDER_BY_ID_ORDER = "SELECT * FROM orders WHERE ID_Order = ?"; //////////----------------------
+
     //private static String SELECT_//
 
     Connection connection = null;
@@ -694,11 +697,11 @@ public class ProductDAO {
             System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int ID_Product = rs.getInt("ID_Product");
-                int ID_Order = rs.getInt("ID_Order");
+                int ID_Product = rs.getInt("id_product");
+                int ID_Order = rs.getInt("id_order");
                 int quantity = rs.getInt("quantity");
                 double price = rs.getDouble("price");
-                double discountprice = rs.getDouble("discountprice");
+                double discountprice = rs.getDouble("discount_price");
                 boolean status = rs.getBoolean("status");
                 if (status == false)
                     ods.add(new OrderDetail(ID_Product, ID_Order, ID_Cart, quantity, price, discountprice, status));
@@ -869,4 +872,107 @@ public class ProductDAO {
         return ID_Order;
     }
 
+    public List<Order> selectAllOrder()
+    {
+        List<Order> orders = new ArrayList<>();
+        // Step 1: Establishing a Connection
+        try (
+             // Step 2:Create a statement using connection object
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ORDER);)
+        {
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            // Step 4: Process the ResultSet object.
+            while (rs.next())
+            {
+                int ID_Order = rs.getInt("ID_Order");
+                int ID_Customer = rs.getInt("ID_Customer");
+                double total_price = rs.getDouble("total_price");
+                Date order_date = rs.getDate("order_date");
+                Date delivery_date = rs.getDate("delivery_date");
+                String order_location = rs.getString("order_location");
+                String phone_number = rs.getString("phone_number");
+                String status;
+                Date now = Date.valueOf(LocalDate.now());
+                if(delivery_date.compareTo(now) > 0)
+                {
+                    status = "chua giao";
+                }
+                else
+                {
+                    status = "da giao";
+                }
+                orders.add(new Order(ID_Order,ID_Customer,total_price,status,order_date,phone_number,delivery_date,order_location));
+            }
+        }
+        catch (SQLException e) {
+            printSQLException(e);
+        }
+        return orders;
+    }
+
+    public List<OrderDetail> GetOrderDetailforLS(int ID_Cart)
+    {
+        List<OrderDetail> ods = new ArrayList<>();
+        try (             PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_OrderDetail_BY_IDCART))
+        {
+            preparedStatement.setInt(1, ID_Cart);
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next())
+            {
+                int ID_Product = rs.getInt("ID_Product");
+                int ID_Order = rs.getInt("ID_Order");
+                int quantity = rs.getInt("quantity");
+                double price = rs.getDouble("price");
+                double discountprice = rs.getDouble("discountprice");
+                boolean status = rs.getBoolean("status");
+                if(status == true)ods.add(new OrderDetail(ID_Product,ID_Order,ID_Cart,quantity,price,discountprice,status));
+            }
+        }
+        catch (SQLException e)
+        {
+            printSQLException(e);
+        }
+        return ods;
+    }
+
+    public Date selectOrderdate(int ID_Order) {
+        Order or = null;
+        Date ord = null;
+        // Step 1: Establishing a Connection
+        try (             // Step 2:Create a statement using connection object
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ORDER_BY_ID_ORDER);)
+        {
+            preparedStatement.setInt(1, ID_Order);
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next())
+            {
+                ord = rs.getDate("order_date");
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return ord;
+    }
+
+    public List<lichsumuahang> GetLSMHByID_User(int ID_User)
+    {
+        List<lichsumuahang> lsmh = new ArrayList<>();
+        List<OrderDetail> ors = GetOrderDetailforLS(ID_User);
+        List<OrderDetailShow> orss =  convertFromOrderDetail(ors);
+        for(OrderDetailShow orshow : orss)
+        {
+            String Book_title = orshow.getBookTitle();
+            int quantity = orshow.getQuantity();
+            Date order_date = selectOrderdate(orshow.getIdOrder());
+            double total_price = orshow.getTinhTien();
+            lsmh.add(new lichsumuahang(Book_title,quantity,total_price,order_date));
+        }
+        return lsmh;
+    }
 }

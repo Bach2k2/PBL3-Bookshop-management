@@ -39,7 +39,7 @@
 <div id="top-bar" class="container">
     <div class="row">
         <div class="span4">
-            <form class="search_form" action="displayproduct" method="post">
+            <form class="search_form" action="product" method="post">
                 <div class="input-group">
                     <input type="text" class="search-query form-control input-group" Placeholder="Tìm sách theo tên"
                            name="namesearch">
@@ -55,8 +55,9 @@
         <div class="span8">
             <div class="account pull-right">
                 <ul class="user-menu">
-                    <li><a href="#">Tài Khoản</a></li>
+                    <li><a href="product?action=myAccount&ID_U=${sessionScope.account.idAccount}">Tài Khoản</a></li>
                     <li><a href="./MyCart?ID_U=<c:out value='${sessionScope.account.idAccount}'/>"> Giỏ hàng </a></li>
+                    <li><c:out value='${sessionScope.account.username}'/></li>
                 </ul>
             </div>
         </div>
@@ -65,7 +66,7 @@
 <div id="wrapper" class="container">
     <section class="navbar main-menu">
         <div class="navbar-inner main-menu">
-            <a href="index.html" class="logo pull-left"><h4 class="title">Nobman</h4></a>
+            <a href="/home" class="logo pull-left"><h4 class="title">Memorial</h4></a>
             <nav id="menu" class="pull-right">
                 <ul>
                     <li><a href="./product?ID_U=<c:out value='${ID_U}'/>">Quay về cửa hàng</a>
@@ -101,16 +102,16 @@
                                     <button type="submit" class="btn btn-success">xóa</button>
                                 </td>
                                 <td>
-                                    <a href="Productdetail?ID_Product=<c:out value='${OrderdetailShow.getID_Product()}' />&ID_U=<c:out value='${ID_U}' />"><img
+                                    <a href="productDetail?ID_Product=<c:out value='${OrderdetailShow.getIdProduct()}' />&ID_U=<c:out value='${ID_U}' />"><img
                                             alt=""
-                                            src="themes/images/cloth/thebook ${OrderdetailShow.getID_Product()}.jpg"></a>
+                                            src="themes/images/cloth/thebook ${OrderdetailShow.getIdProduct()}.jpg"></a>
                                 </td>
-                                <td>${OrderdetailShow.getBook_title()}</td>
+                                <td>${OrderdetailShow.getBookTitle()}</td>
                                 <td>${OrderdetailShow.getQuantity()}</td>
                                 <td>${OrderdetailShow.getPrice()}</td>
-                                <td>${OrderdetailShow.getTinhtien()}</td>
-                                <input type="hidden" name="ID_ProductShow" value='${OrderdetailShow.getID_Product()}'>
-                                <input type="hidden" name="ID_CardShow" value='${OrderdetailShow.getID_Cart()}'>
+                                <td>${OrderdetailShow.getTinhTien()}</td>
+                                <input type="hidden" name="ID_ProductShow" value='${OrderdetailShow.getIdProduct()}'>
+                                <input type="hidden" name="ID_CardShow" value='${OrderdetailShow.getIdCart()}'>
                                 <input type="hidden" name="statusShow" value='${OrderdetailShow.isStatus()}'>
                                 <input type="hidden" name="ID_U" value='${ID_U}'>
                                 <input type="hidden" name="action" value="deleteod">
@@ -130,7 +131,7 @@
 
                 <hr/>
                 <p class="buttons center">
-                    <a href="Paying?ID_U=<c:out value='${ID_U}' />" class="btn btn-primary">Thanh Toán</a>
+                    <a href="paying?ID_U=<c:out value='${ID_U}' />" class="btn btn-primary">Thanh Toán</a>
                 </p>
             </div>
             <div class="span3 col">
@@ -151,13 +152,13 @@
                                         <li class="span3">
                                             <div class="product-box">
                                                 <span class="sale_tag"></span>
-                                                <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />&ID_U=<c:out value='${ID_U}' />"><img
+                                                <a href="productDetail?ID_Product=<c:out value='${ProductShow.getIdProduct()}' />&ID_U=<c:out value='${ID_U}' />"><img
                                                         alt=""
-                                                        src="themes/images/cloth/thebook ${ProductShow.getID_Product()}.jpg"></a><br/>
-                                                <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />&ID_U=<c:out value='${ID_U}' />"
-                                                   class="title">${ProductShow.getBook_title()}</a><br/>
-                                                <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />&ID_U=<c:out value='${ID_U}' />"
-                                                   class="category">${ProductShow.getCategory_name()}</a>
+                                                        src="themes/images/cloth/thebook ${ProductShow.getIdProduct()}.jpg"></a><br/>
+                                                <a href="productDetail?ID_Product=<c:out value='${ProductShow.getIdProduct()}' />&ID_U=<c:out value='${ID_U}' />"
+                                                   class="title">${ProductShow.getBookTitle()}</a><br/>
+                                                <a href="productDetail?ID_Product=<c:out value='${ProductShow.getIdProduct()}' />&ID_U=<c:out value='${ID_U}' />"
+                                                   class="category">${ProductShow.getCategoryName()}</a>
                                                 <p class="price">${ProductShow.getPrice()}</p>
                                             </div>
                                         </li>
@@ -170,13 +171,13 @@
                                         <li class="span3">
                                             <div class="product-box">
                                                 <span class="sale_tag"></span>
-                                                <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />&ID_U=<c:out value='${ID_U}' />"><img
+                                                <a href="productDetail?ID_Product=<c:out value='${ProductShow.getIdProduct()}' />&ID_U=<c:out value='${ID_U}' />"><img
                                                         alt=""
-                                                        src="themes/images/cloth/thebook ${ProductShow.getID_Product()}.jpg"></a><br/>
-                                                <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />&ID_U=<c:out value='${ID_U}' />"
-                                                   class="title">${ProductShow.getBook_title()}</a><br/>
-                                                <a href="Productdetail?ID_Product=<c:out value='${ProductShow.getID_Product()}' />&ID_U=<c:out value='${ID_U}' />"
-                                                   class="category">${ProductShow.getCategory_name()}</a>
+                                                        src="themes/images/cloth/thebook ${ProductShow.getIdProduct()}.jpg"></a><br/>
+                                                <a href="productDetail?ID_Product=<c:out value='${ProductShow.getIdProduct()}' />&ID_U=<c:out value='${ID_U}' />"
+                                                   class="title">${ProductShow.getBookTitle()}</a><br/>
+                                                <a href="productDetail?ID_Product=<c:out value='${ProductShow.getIdProduct()}' />&ID_U=<c:out value='${ID_U}' />"
+                                                   class="category">${ProductShow.getCategoryName()}</a>
                                                 <p class="price">${ProductShow.getPrice()}</p>
                                             </div>
                                         </li>
@@ -194,19 +195,19 @@
             <div class="span3">
                 <h4>Điều Hướng</h4>
                 <ul class="nav">
-                    <li><a href="./index.html">Trang chủ</a></li>
-                    <li><a href="./about.html">Thông tin</a></li>
+                    <li><a href="/home">Trang chủ</a></li>
+                    <li><a href="#">Thông tin</a></li>
                     <li><a href="./contact.html">Liên hệ</a></li>
                     <li><a href="./cart.html">Giỏ hàng</a></li>
-                    <li><a href="./register.html">Đăng nhập</a></li>
+                    <li><a href="./home?action=login">Đăng nhập</a></li>
                 </ul>
             </div>
             <div class="span4">
                 <h4>My Account</h4>
                 <ul class="nav">
-                    <li><a href="#">Tài khoản của tôi</a></li>
+                    <li><a href="/product?action=MyAccount">Tài khoản của tôi</a></li>
                     <li><a href="#">Lịch sử đặt hàng</a></li>
-                    <li><a href="#">Danh sách yêu thích</a></li>
+<%--                    <li><a href="#">Danh sách yêu thích</a></li>--%>
                     <!-- <li><a href="#">Làm mới</a></li> -->
                 </ul>
             </div>

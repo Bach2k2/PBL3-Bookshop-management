@@ -35,8 +35,10 @@ public class ProductController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String action = request.getParameter("action");
-            if (action == null) action = "";
+        response.setContentType("text/html;charset=UTF-8");
+        String action = request.getParameter("action");
+        if (action == null) action = "";
+        doGet(request, response);
 
     }
 
@@ -47,21 +49,6 @@ public class ProductController extends HttpServlet {
         request.setAttribute("ID_U", ID_User);
         try {
             switch (action) {
-                case "new":
-                    //showNewForm(request, response);
-                    break;
-                case "insert":
-                    //insertProduct(request, response);
-                    break;
-                case "delete":
-                    //deleteProduct(request, response);
-                    break;
-                case "edit":
-                    //showEditForm(request, response);
-                    break;
-                case "update":
-                    //updateProduct(request, response);
-                    break;
                 case "searchprice": {
                     searchPrice(request, response);
                     break;
@@ -74,9 +61,8 @@ public class ProductController extends HttpServlet {
                     searchName(request, response);
                     break;
                 }
-                case "myAccount":
-                {
-                    showUserInfo(request,response);
+                case "myAccount": {
+                    showUserInfo(request, response);
                     break;
                 }
                 default:
@@ -96,7 +82,7 @@ public class ProductController extends HttpServlet {
         List<ProductShow> listProductShow = productDAO.GetPSListByName(name);
         request.setAttribute("listProductShow", listProductShow);
         List<Category> categorys = productDAO.selectAllCategory();
-        request.setAttribute("categorys", categorys);
+        request.setAttribute("categories", categorys);
         RequestDispatcher dispatcher = request.getRequestDispatcher("views/product/product-list.jsp");
         dispatcher.forward(request, response);
     }
@@ -107,7 +93,7 @@ public class ProductController extends HttpServlet {
         List<ProductShow> listProductShow = productDAO.GetPSListByCategory(category);
         request.setAttribute("listProductShow", listProductShow);
         List<Category> categorys = productDAO.selectAllCategory();
-        request.setAttribute("categorys", categorys);
+        request.setAttribute("categories", categorys);
         RequestDispatcher dispatcher = request.getRequestDispatcher("views/product/product-list.jsp");
         dispatcher.forward(request, response);
     }
@@ -121,7 +107,7 @@ public class ProductController extends HttpServlet {
         List<ProductShow> listProductShow = productDAO.GetPSListByPrice(price);
         request.setAttribute("listProductShow", listProductShow);
         List<Category> categorys = productDAO.selectAllCategory();
-        request.setAttribute("categorys", categorys);
+        request.setAttribute("categories", categorys);
         RequestDispatcher dispatcher = request.getRequestDispatcher("views/product/product-list.jsp");
         dispatcher.forward(request, response);
     }
@@ -138,7 +124,7 @@ public class ProductController extends HttpServlet {
 
     public void loginUser(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
-        try{
+        try {
             request.setAttribute("message", null);
             Account model = null;
             String username = request.getParameter("username");
@@ -152,8 +138,8 @@ public class ProductController extends HttpServlet {
                 request.setAttribute("check", true);
                 request.setAttribute("username", model.getUsername());
 
-                Cookie u=new Cookie("user",username);
-                Cookie p=new Cookie("pass",password);
+                Cookie u = new Cookie("user", username);
+                Cookie p = new Cookie("pass", password);
                 u.setMaxAge(60);
                 p.setMaxAge(60);
                 response.addCookie(u);// luu u va p len tren edge;
@@ -166,16 +152,15 @@ public class ProductController extends HttpServlet {
                     System.out.println("Vào trang admin");
 
                 }
-                request.setAttribute("username",model.getUsername());
-                 listProduct(request,response);
+                request.setAttribute("username", model.getUsername());
+                listProduct(request, response);
             } else {
                 request.setAttribute("message", "Đăng nhập thất bại. username hoặc password không đúng");
                 request.setAttribute("check", false);
                 System.out.println("Đăng nhập thất bại");
                 request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
             }
-        }catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
 
@@ -184,11 +169,11 @@ public class ProductController extends HttpServlet {
     public void showUserInfo(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session=request.getSession();
-        Account account=(Account) session.getAttribute("account");
-        Customer customer= customerService.findByIdAccount(account.getIdAccount());
-        request.setAttribute("account",account);
-        request.setAttribute("user",customer);
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        Customer customer = customerService.findByIdAccount(account.getIdAccount());
+        request.setAttribute("account", account);
+        request.setAttribute("user", customer);
         RequestDispatcher dispatcher = request.getRequestDispatcher("views/user/user-info.jsp");
         dispatcher.forward(request, response);
     }

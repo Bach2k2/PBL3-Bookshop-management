@@ -36,7 +36,7 @@
 <div id="top-bar" class="container">
     <div class="row">
         <div class="span4">
-            <form class="search_form" action="displayproduct" method = "post">
+            <form class="search_form" action="product" method = "post">
                 <div class="input-group">
                     <input type="text" class="search-query form-control input-group" Placeholder="Tìm sách theo tên"
                            name = "namesearch">
@@ -54,7 +54,7 @@
                 <ul class="user-menu">
                     <li><a href="#">Tài Khoản</a></li>
                     <li><a href="./MyCart?ID_U=<c:out value='${ID_U}'/>"> Giỏ hàng </a></li>
-                    <li><a href="register.html"> Đăng nhập </a></li>
+                    <li><a href="/home?action=login"> Đăng nhập </a></li>
                 </ul>
             </div>
         </div>
@@ -63,10 +63,10 @@
 <div id="wrapper" class="container">
     <section class="navbar main-menu">
         <div class="navbar-inner main-menu">
-            <a href="index.html" class="logo pull-left"><h4 class="title">KBOOK</h4> </a>
+            <a href="/home" class="logo pull-left"><h4 class="title">Nobmad</h4> </a>
             <nav id="menu" class="pull-right">
                 <ul>
-                    <li><a href="./displayproduct?ID_U=<c:out value='${ID_U}'/>">Quay về cửa hàng</a></li>
+                    <li><a href="./product?ID_U=<c:out value='${ID_U}'/>">Quay về cửa hàng</a></li>
                 </ul>
             </nav>
         </div>
@@ -97,28 +97,28 @@
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">Địa chỉ giao hàng:</label>
+                                                <label class="control-label">Địa chỉ giao hàng<span class="text text-danger">(*)</span></label>
                                                 <div class="controls">
-                                                    <input type="text" placeholder="" class="input-xlarge" name ="order_location">
+                                                    <input type="text" id="orderLocate"  class="input-xlarge" name ="order_location" required>
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">Số điện thoại:</label>
+                                                <label class="control-label">Số điện thoại<span class="text text-danger">(*)</span></label>
                                                 <div class="controls">
-                                                    <input type="text" placeholder="" class="input-xlarge" name = "phone_number">
+                                                    <input type="text" id="phoneNum" class="input-xlarge" name = "phone_number" required>
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">Ngày giao hàng:</label>
+                                                <label class="control-label">Ngày giao hàng<span class="text text-danger">(*)</span>:</label>
                                                 <div class="controls">
-                                                    <input type="date" placeholder="" class="input-xlarge" name = "delivery_date">
+                                                    <input type="date" id="deliveryDate" class="input-xlarge" name = "delivery_date" required>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <input type ="hidden" name="ID_U" value ='${ID_U}'>
                                     <input type ="hidden" name="action" value ="thanhtoan">
-                                    <button class="btn btn-primary pull-right" type="submit">Xác nhận đơn hàng</button>
+                                    <button class="btn btn-primary pull-right" type="submit" onclick="validate()">Xác nhận đơn hàng</button>
                                 </div>
                             </form>
                         </div>
@@ -128,6 +128,24 @@
             </div>
         </div>
     </section>
+    <script>
+        function validate() {
+            var orderLocate=document.getElementById("orderLocate").value;
+            var phoneNum=document.getElementById("phoneNum").value;
+            var deliveryDate= document.getElementById("deliveryDate").value
+            alert(deliveryDate);
+            if((orderLocate==""||orderLocate==null)
+                &&(phoneNum==""||phoneNum==null)
+                &&(deliveryDate===""||deliveryDate===null))
+            {
+                alert("Mời nhập đầy đủ thông tin")
+
+            }else{
+                confirm("Đã thanh toán thành công");
+            }
+
+        }
+    </script>
     <section style="background-color: #857474;" id="footer-bar">
         <div class="row">
             <div class="span3">

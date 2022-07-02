@@ -62,11 +62,11 @@
                         $('#editProductModal #upt_bookTitle').val(result.bookTitle);
                         $('#editProductModal #upt_quantity').val(result.quantity);
                         $('#editProductModal #upt_price').val(result.price);
-                        $('#editProductModal #upt_category').selected(result.idCategory);
-                        $('#editProductModal #upt_author').selected(result.idAuthor);
+                        $('#editProductModal #upt_category').select(result.idCategory);
+                        $('#editProductModal #upt_author').select(result.idAuthor);
                         $('#editProductModal #upt_description').val(result.productDescription);
                         $('#editProductModal #upt_publisher').val(result.publisher);
-                        $('#editProductModal #upt_publisherDate').dataType(Date,result.publishDate);
+                        $('input[name=publishDate2]').val(result.publishDate);
                         $('#editProductModal #idProductEdit').val(result.idProduct);
                     }
                 });
@@ -135,17 +135,17 @@
                                                     <div class="form-group">
                                                         <label for="tensach">Tên sách:</label>
                                                         <input type="text" class="form-control" id="tensach"
-                                                               name="Book_title">
+                                                               name="Book_title" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="comment">Mô tả:</label>
                                                         <textarea class="form-control" rows="5" id="comment"
-                                                                  name="Product_description"></textarea>
+                                                                  name="Product_description" required></textarea>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label for="theloai">Thể Loại sách:</label>
-                                                        <select name="category_name" id="theloai" class="form-control">
+                                                        <select name="category_name" id="theloai" class="form-control" required>
                                                             <option value="0" selected>--Chọn thể loại sách --</option>
                                                             <c:forEach var="category" items="${categoryList}">
                                                                 <option value="${category.getIdCategory()}">${category.getCategoryName()}</option>
@@ -155,16 +155,16 @@
                                                     <div class="form-group">
                                                         <label for="nhasb">Nhà xuất bản:</label>
                                                         <input type="text" class="form-control" id="nhasb"
-                                                               name="publisher">
+                                                               name="publisher" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="ngaysb">Ngày xuất bản:</label>
                                                         <input type="date" class="form-control" id="ngaysb"
-                                                               name="publish_date">
+                                                               name="publish_date" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="author">Tác giả:</label>
-                                                        <select id="author" name="author">
+                                                        <select id="author" name="author" required>
                                                             <option value="0" selected>--Chọn tác giả --</option>
                                                             <c:forEach var="author" items="${authorList}">
                                                                 <option value="${author.getIdAuthor()}">${author.getAuthorName()}</option>
@@ -173,12 +173,12 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="gia">Giá bán:</label>
-                                                        <input type="number" class="form-control" id="gia" name="price">
+                                                        <input type="number" class="form-control" id="gia" name="price" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="gia">Số lượng:</label>
                                                         <input type="number" class="form-control" id="quantity"
-                                                               name="quantity">
+                                                               name="quantity" required>
                                                     </div>
                                                     <button type="submit" class="btn btn-default">Thêm sản phẩm</button>
                                                 </form>
@@ -291,13 +291,13 @@
                                                                 <label for="upt_bookTitle">Tên sách:</label>
                                                                 <input type="text" class="form-control"
                                                                        id="upt_bookTitle"
-                                                                       name="bookTitle2">
+                                                                       name="bookTitle2" required>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="upt_description">Mô tả:</label>
                                                                 <textarea class="form-control" rows="6"
                                                                           id="upt_description"
-                                                                          name="description2"></textarea>
+                                                                          name="description2" required></textarea>
                                                             </div>
 
                                                             <div class="form-group">
@@ -319,7 +319,7 @@
                                                                 <label for="upt_publisherDate">Ngày xuất bản:</label>
                                                                 <input type="date" class="form-control"
                                                                        id="upt_publisherDate"
-                                                                       name="publishDate2">
+                                                                       name="publishDate2" required>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="upt_author">Tác giả:</label>
@@ -448,7 +448,7 @@
             <!--inner block end here-->
             <!--copy rights start here-->
             <div class="copyrights">
-                <p>© 2022 NBH. All Rights Reserved Design by <a href="http://w3layouts.com/"
+                <p>© 2022 NBH Memorial. All Rights Reserved Design by <a href="http://w3layouts.com/"
                                                                 target="_blank">3GuysLayout</a></p>
             </div>
             <!--COPY rights end here-->

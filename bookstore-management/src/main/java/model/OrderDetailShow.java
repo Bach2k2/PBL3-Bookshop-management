@@ -1,111 +1,95 @@
 package model;
 
-public class OrderDetailShow {
-    private String Book_title;
-    private int ID_Order = 0;
-    private int ID_Product;
-    private int ID_Cart;
+public class OrderDetailShow
+{
+    private String bookTitle;
+    private int idOrder = 0;
+    private int idProduct;
+    private int idCart;
     private int quantity;
     private double price;
     private double discountPrice = 0;
     private boolean status = false;
-    private double Tinhtien;
+    private double tinhtien;
 
-    public int getID_Product() {
-        return ID_Product;
+    public int getIdProduct() {
+        return idProduct;
     }
-
-    public void setID_Product(int iD_Product) {
-        ID_Product = iD_Product;
+    public void setIdProduct(int iD_Product) {
+        idProduct = iD_Product;
     }
-
-    public String getBook_title() {
-        return Book_title;
+    public String getBookTitle()
+    {
+        return bookTitle;
     }
-
-    public void setBook_title(String book_title) {
-        Book_title = book_title;
+    public void setBookTitle(String bookTitle) {
+        this.bookTitle = bookTitle;
     }
-
-    public int getID_Order() {
-        return ID_Order;
+    public int getIdOrder() {
+        return idOrder;
     }
-
-    public void setID_Order(int iD_Order) {
-        ID_Order = iD_Order;
+    public void setIdOrder(int iD_Order) {
+        idOrder = iD_Order;
     }
-
-    public int getID_Cart() {
-        return ID_Cart;
+    public int getIdCart() {
+        return idCart;
     }
-
-    public void setID_Cart(int iD_Cart) {
-        ID_Cart = iD_Cart;
+    public void setIdCart(int iD_Cart) {
+        idCart = iD_Cart;
     }
-
     public int getQuantity() {
         return quantity;
     }
-
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
     public double getPrice() {
         return price;
     }
-
     public void setPrice(double price) {
         this.price = price;
     }
-
     public double getDiscountPrice() {
         return discountPrice;
     }
-
     public void setDiscountPrice(double discountPrice) {
         this.discountPrice = discountPrice;
     }
-
     public boolean isStatus() {
         return status;
     }
-
     public void setStatus(boolean status) {
         this.status = status;
     }
-
-    public double getTinhtien() {
+    public double getTinhTien()
+    {
         double _Tinhtien = quantity * price;
         return _Tinhtien;
     }
-
     public void setTinhtien(double tinhtien) {
-        Tinhtien = tinhtien;
+        this.tinhtien = tinhtien;
     }
-
-    public OrderDetailShow(String book_title, int iD_Order, int iD_Cart, int quantity, double price, double discountPrice,
+    public OrderDetailShow(String bookTitle, int iD_Order, int iD_Cart, int quantity, double price, double discountPrice,
                            boolean status, double tinhtien) {
         super();
-        Book_title = book_title;
-        ID_Order = iD_Order;
-        ID_Cart = iD_Cart;
+        this.bookTitle = bookTitle;
+        idOrder = iD_Order;
+        idCart = iD_Cart;
         this.quantity = quantity;
         this.price = price;
         this.discountPrice = discountPrice;
         this.status = status;
-        Tinhtien = tinhtien;
+        this.tinhtien = tinhtien;
     }
-
-    public OrderDetailShow(String book_title, int iD_Order, int iD_Cart, int quantity, double price, boolean status, int iD_Product) {
+    public OrderDetailShow(String bookTitle, int iD_Order, int iD_Cart, int quantity, double price, boolean status, int iD_Product) {
         super();
-        Book_title = book_title;
-        ID_Order = iD_Order;
-        ID_Cart = iD_Cart;
+        this.bookTitle = bookTitle;
+        idOrder = iD_Order;
+        idCart = iD_Cart;
         this.quantity = quantity;
         this.price = price;
         this.status = status;
-        this.ID_Product = iD_Product;
+        this.idProduct = iD_Product;
     }
 
 }

@@ -11,6 +11,7 @@ public class Order {
     private String phoneNumber;
     private Date deliveryDate;
     private String orderLocation;
+    private String status;
 
     public Order() {
     }
@@ -24,6 +25,18 @@ public class Order {
         this.phoneNumber = phoneNumber;
         this.deliveryDate = deliveryDate;
         this.orderLocation = orderLocation;
+    }
+
+
+    public Order(int idCustomer, double totalPrice, String orderStatus, Date orderDate, String phoneNumber, Date deliveryDate, String orderLocation, String status) {
+        this.idCustomer = idCustomer;
+        this.totalPrice = totalPrice;
+        this.orderStatus = orderStatus;
+        this.orderDate = orderDate;
+        this.phoneNumber = phoneNumber;
+        this.deliveryDate = deliveryDate;
+        this.orderLocation = orderLocation;
+        this.status = status;
     }
 
     public int getIdOrder() {
@@ -88,5 +101,13 @@ public class Order {
 
     public void setOrderLocation(String orderLocation) {
         this.orderLocation = orderLocation;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
