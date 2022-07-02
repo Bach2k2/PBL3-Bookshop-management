@@ -134,7 +134,7 @@
             <div class="span9">
                 <div class="row">
                     <div class="span4">
-                        <a href="themes/images/cloth/thebook ${ProductShow.getIdProduct()}.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 1"><img alt="" src="themes/images/cloth/thebook ${ProductShowdetail.getIdProduct()}.jpg"></a>
+                        <a href="${ProductShow.getCoverImages()}" class="thumbnail" data-fancybox-group="group1" title="Description 1"><img alt="" src="themes/images/cloth/thebook ${ProductShowdetail.getIdProduct()}.jpg"></a>
 
                     </div>
                     <div class="span5">

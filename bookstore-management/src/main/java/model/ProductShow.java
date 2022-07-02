@@ -13,6 +13,7 @@ public class ProductShow {
     private Date publishDate;
     private String authorName;
     private String categoryName;
+    private String coverImages;
 
     public ProductShow() {
     }
@@ -28,6 +29,33 @@ public class ProductShow {
         this.publishDate = publishDate;
         this.authorName = authorName;
         this.categoryName = categoryName;
+    }
+
+    public ProductShow(int quantity, double price, double averageRating, String productDescription, String bookTitle, String publisher, Date publishDate, String authorName, String categoryName, String coverImages) {
+        this.quantity = quantity;
+        this.price = price;
+        this.averageRating = averageRating;
+        this.productDescription = productDescription;
+        this.bookTitle = bookTitle;
+        this.publisher = publisher;
+        this.publishDate = publishDate;
+        this.authorName = authorName;
+        this.categoryName = categoryName;
+        this.coverImages = coverImages;
+    }
+
+    public ProductShow(int idProduct, int quantity, double price, double averageRating, String productDescription, String bookTitle, String publisher, Date publishDate, String authorName, String categoryName, String coverImages) {
+        this.idProduct = idProduct;
+        this.quantity = quantity;
+        this.price = price;
+        this.averageRating = averageRating;
+        this.productDescription = productDescription;
+        this.bookTitle = bookTitle;
+        this.publisher = publisher;
+        this.publishDate = publishDate;
+        this.authorName = authorName;
+        this.categoryName = categoryName;
+        this.coverImages = coverImages;
     }
 
     public int getIdProduct() {
@@ -108,6 +136,14 @@ public class ProductShow {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public String getCoverImages() {
+        return coverImages;
+    }
+
+    public void setCoverImages(String coverImages) {
+        this.coverImages = coverImages;
     }
 }
 

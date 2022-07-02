@@ -16,6 +16,7 @@ public class Product {
 //    private String itemBrand;
     private int idAuthor;
     private int idCategory;
+    private String coverImages;
 
     public Product() {
     }
@@ -31,6 +32,20 @@ public class Product {
         this.averageRating = averageRating;
         this.idAuthor = idAuthor;
         this.idCategory = idCategory;
+    }
+
+    public Product(int idProduct, String bookTitle, String productDescription, String publisher, Date publishDate, int quantity, double price, double averageRating, int idAuthor, int idCategory, String coverImages) {
+        this.idProduct = idProduct;
+        this.bookTitle = bookTitle;
+        this.productDescription = productDescription;
+        this.publisher = publisher;
+        this.publishDate = publishDate;
+        this.quantity = quantity;
+        this.price = price;
+        this.averageRating = averageRating;
+        this.idAuthor = idAuthor;
+        this.idCategory = idCategory;
+        this.coverImages = coverImages;
     }
 
     public int getIdProduct() {
@@ -111,5 +126,13 @@ public class Product {
 
     public void setIdCategory(int idCategory) {
         this.idCategory = idCategory;
+    }
+
+    public String getCoverImages() {
+        return coverImages;
+    }
+
+    public void setCoverImages(String coverImages) {
+        this.coverImages = coverImages;
     }
 }

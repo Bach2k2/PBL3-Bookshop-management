@@ -114,7 +114,7 @@ public class ProductController extends HttpServlet {
 
     public void listProduct(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
-        List<ProductShow> listProductShow = productDAO.convertProduct(productDAO.selectAllProduct());
+        List<ProductShow> listProductShow = productDAO.convertProduct(productDAO.selectAllProductWithImages());
         request.setAttribute("listProductShow", listProductShow);
         List<Category> categories = productDAO.selectAllCategory();
         request.setAttribute("categories", categories);

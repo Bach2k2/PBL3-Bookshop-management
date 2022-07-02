@@ -78,6 +78,9 @@ public class ProductDAO {
     private static String SELECT_ALL_ORDER = "SELECT * FROM orders";
     private static String SELECT_ORDER_BY_ID_ORDER = "SELECT * FROM orders WHERE ID_Order = ?"; //////////----------------------
 
+
+    private static String SELECT_ALL_PRODUCT_WITH_IMAGES = "SELECT * FROM product inner join attached_images on product.id_product=attached_images.id_product";
+    private static String SELECT_PRODUCT_WITH_IMAGES_BY_ID = "SELECT * FROM product inner join attached_images on product.id_product=attached_images.id_product where product.id_product=?";
     //private static String SELECT_//
 
     Connection connection = null;
@@ -192,6 +195,65 @@ public class ProductDAO {
         return Products;
     }
 
+    public List<Product> selectAllProductWithImages() {
+
+        // using try-with-resources to avoid closing resources (boiler plate code)
+        List<Product> Products = new ArrayList<>();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_PRODUCT_WITH_IMAGES);) {
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                int idProduct = rs.getInt("id_product");
+                int quantity = rs.getInt("quantity");
+                double price = rs.getDouble("price");
+                double averageRating = rs.getDouble("average_rating");
+                String description = rs.getString("description");
+                String bookTitle = rs.getString("book_title");
+                String publisher = rs.getString("publisher");
+                Date publishDate = rs.getDate("publish_date");
+                int idAuthor = rs.getInt("id_author");
+                int idCategory = rs.getInt("id_category");
+                String coverImages = rs.getString("cover_images");
+                Products.add(new Product(idProduct, bookTitle, description, publisher, publishDate, quantity, price, averageRating, idAuthor, idCategory, coverImages));
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return Products;
+    }
+
+    public Product selectAllProductWithImages(int idProduct) {
+        Product product = null;
+        // using try-with-resources to avoid closing resources (boiler plate code)
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRODUCT_WITH_IMAGES_BY_ID);) {
+            System.out.println(preparedStatement);
+            preparedStatement.setInt(1, idProduct);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                int quantity = rs.getInt("quantity");
+                double price = rs.getDouble("price");
+                double averageRating = rs.getDouble("average_rating");
+                String description = rs.getString("description");
+                String bookTitle = rs.getString("book_title");
+                String publisher = rs.getString("publisher");
+                Date publishDate = rs.getDate("publish_date");
+                int idAuthor = rs.getInt("id_author");
+                int idCategory = rs.getInt("id_category");
+                String coverImages = rs.getString("cover_images");
+                product = new Product(idProduct, bookTitle, description, publisher, publishDate, quantity, price, averageRating, idAuthor, idCategory, coverImages);
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return product;
+    }
+
     public List<Product> selectAllProductbyCategory(int idCategory) {
         List<Product> Products = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRODUCT_BY_Category);) {
@@ -280,6 +342,7 @@ public class ProductDAO {
         }
         return categories;
     }
+
     public boolean updateCategory(Category category) throws SQLException {
         boolean rowUpdated;
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CATEGORY_SQL);) {
@@ -291,6 +354,7 @@ public class ProductDAO {
         }
         return rowUpdated;
     }
+
     public boolean deleteCategory(int categoryId) throws SQLException {
         boolean rowDeleted;
         try (PreparedStatement statement = this.connection.prepareStatement(DELETE_CATEGORY_SQL);) {
@@ -374,6 +438,7 @@ public class ProductDAO {
         }
         return Authors;
     }
+
     public boolean updateAuthor(Author author) throws SQLException {
         boolean rowUpdated;
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_AUTHOR_SQL);) {
@@ -386,6 +451,7 @@ public class ProductDAO {
         }
         return rowUpdated;
     }
+
     public boolean deleteAuthor(int authorId) throws SQLException {
         boolean rowDeleted;
         try (PreparedStatement statement = this.connection.prepareStatement(DELETE_AUTHOR_SQL);) {
@@ -430,7 +496,7 @@ public class ProductDAO {
         String categoryName = getNamebyIDCategory(product.getIdCategory(), selectAllCategory());
         ProductShow ps = new ProductShow(product.getIdProduct(), product.getQuantity(), product.getPrice()
                 , product.getAverageRating(), product.getBookTitle(), product.getPublisher(), product.getProductDescription(),
-                (Date) product.getPublishDate(), authorName, categoryName);
+                (Date) product.getPublishDate(), authorName, categoryName,product.getCoverImages());
 
         return ps;
     }
@@ -872,19 +938,16 @@ public class ProductDAO {
         return ID_Order;
     }
 
-    public List<Order> selectAllOrder()
-    {
+    public List<Order> selectAllOrder() {
         List<Order> orders = new ArrayList<>();
         // Step 1: Establishing a Connection
         try (
-             // Step 2:Create a statement using connection object
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ORDER);)
-        {
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ORDER);) {
             System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
             // Step 4: Process the ResultSet object.
-            while (rs.next())
-            {
+            while (rs.next()) {
                 int ID_Order = rs.getInt("ID_Order");
                 int ID_Customer = rs.getInt("ID_Customer");
                 double total_price = rs.getDouble("total_price");
@@ -894,44 +957,36 @@ public class ProductDAO {
                 String phone_number = rs.getString("phone_number");
                 String status;
                 Date now = Date.valueOf(LocalDate.now());
-                if(delivery_date.compareTo(now) > 0)
-                {
+                if (delivery_date.compareTo(now) > 0) {
                     status = "chua giao";
-                }
-                else
-                {
+                } else {
                     status = "da giao";
                 }
-                orders.add(new Order(ID_Order,ID_Customer,total_price,status,order_date,phone_number,delivery_date,order_location));
+                orders.add(new Order(ID_Order, ID_Customer, total_price, status, order_date, phone_number, delivery_date, order_location));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             printSQLException(e);
         }
         return orders;
     }
 
-    public List<OrderDetail> GetOrderDetailforLS(int ID_Cart)
-    {
+    public List<OrderDetail> GetOrderDetailforLS(int ID_Cart) {
         List<OrderDetail> ods = new ArrayList<>();
-        try (             PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_OrderDetail_BY_IDCART))
-        {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_OrderDetail_BY_IDCART)) {
             preparedStatement.setInt(1, ID_Cart);
             System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 int ID_Product = rs.getInt("ID_Product");
                 int ID_Order = rs.getInt("ID_Order");
                 int quantity = rs.getInt("quantity");
                 double price = rs.getDouble("price");
                 double discountprice = rs.getDouble("discountprice");
                 boolean status = rs.getBoolean("status");
-                if(status == true)ods.add(new OrderDetail(ID_Product,ID_Order,ID_Cart,quantity,price,discountprice,status));
+                if (status == true)
+                    ods.add(new OrderDetail(ID_Product, ID_Order, ID_Cart, quantity, price, discountprice, status));
             }
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             printSQLException(e);
         }
         return ods;
@@ -942,16 +997,14 @@ public class ProductDAO {
         Date ord = null;
         // Step 1: Establishing a Connection
         try (             // Step 2:Create a statement using connection object
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ORDER_BY_ID_ORDER);)
-        {
+                          PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ORDER_BY_ID_ORDER);) {
             preparedStatement.setInt(1, ID_Order);
             System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
 
             // Step 4: Process the ResultSet object.
-            while (rs.next())
-            {
+            while (rs.next()) {
                 ord = rs.getDate("order_date");
             }
         } catch (SQLException e) {
@@ -960,18 +1013,16 @@ public class ProductDAO {
         return ord;
     }
 
-    public List<lichsumuahang> GetLSMHByID_User(int ID_User)
-    {
+    public List<lichsumuahang> GetLSMHByID_User(int ID_User) {
         List<lichsumuahang> lsmh = new ArrayList<>();
         List<OrderDetail> ors = GetOrderDetailforLS(ID_User);
-        List<OrderDetailShow> orss =  convertFromOrderDetail(ors);
-        for(OrderDetailShow orshow : orss)
-        {
+        List<OrderDetailShow> orss = convertFromOrderDetail(ors);
+        for (OrderDetailShow orshow : orss) {
             String Book_title = orshow.getBookTitle();
             int quantity = orshow.getQuantity();
             Date order_date = selectOrderdate(orshow.getIdOrder());
             double total_price = orshow.getTinhTien();
-            lsmh.add(new lichsumuahang(Book_title,quantity,total_price,order_date));
+            lsmh.add(new lichsumuahang(Book_title, quantity, total_price, order_date));
         }
         return lsmh;
     }
